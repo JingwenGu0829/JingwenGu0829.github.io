@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>deep learning and neural network | AugustGu&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="convolutional neural network layers of CNN input layer convolution layer ReLu layer Pooling fully connected-layer  convolution layer kernel&#x2F;filter ( matrix, scanning over the original image to do">
+<meta property="og:type" content="article">
+<meta property="og:title" content="deep learning and neural network">
+<meta property="og:url" content="https://jingwengu0829.github.io/2022/01/16/deep%20learning/index.html">
+<meta property="og:site_name" content="AugustGu&#39;s blog">
+<meta property="og:description" content="convolutional neural network layers of CNN input layer convolution layer ReLu layer Pooling fully connected-layer  convolution layer kernel&#x2F;filter ( matrix, scanning over the original image to do">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-e7dd00d7fda722d5f8f70a9928e95a17_1440w.jpg">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20181212223827495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x6X3BldGVy,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2022-01-16T11:30:22.000Z">
+<meta property="article:modified_time" content="2023-10-01T23:52:51.808Z">
+<meta property="article:author" content="AugustGu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic4.zhimg.com/80/v2-e7dd00d7fda722d5f8f70a9928e95a17_1440w.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="AugustGu's blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">AugustGu&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://JingwenGu0829.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-deep learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/deep%20learning/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T11:30:22.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/research/">research</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      deep learning and neural network
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>convolutional neural network</p>
+<h4 id="layers-of-CNN"><a href="#layers-of-CNN" class="headerlink" title="layers of CNN"></a><img src="https://pic4.zhimg.com/80/v2-e7dd00d7fda722d5f8f70a9928e95a17_1440w.jpg" alt="img">layers of CNN</h4><ul>
+<li>input layer</li>
+<li>convolution layer</li>
+<li>ReLu layer</li>
+<li>Pooling</li>
+<li>fully connected-layer</li>
+</ul>
+<h4 id="convolution-layer"><a href="#convolution-layer" class="headerlink" title="convolution layer"></a>convolution layer</h4><ul>
+<li>kernel&#x2F;filter ( matrix, scanning over the original image to do the dot multiplication)</li>
+<li>extract the high-level features such as edges, from the input image</li>
+<li>Padding: remain the same size as before</li>
+</ul>
+<h4 id="pooling-layer"><a href="#pooling-layer" class="headerlink" title="pooling layer"></a>pooling layer</h4><ul>
+<li>Down-sampling</li>
+<li>responsible for reducing the spatial size of the convolved feature</li>
+<li>decrease the computational power required to process the data </li>
+<li>max pooling, average pooling (max is much better)</li>
+<li>noise suppressant</li>
+</ul>
+<h4 id="fully-connected-layer"><a href="#fully-connected-layer" class="headerlink" title="fully connected layer"></a>fully connected layer</h4><ul>
+<li><p>softmax classification technique</p>
+<p><img src="https://img-blog.csdnimg.cn/20181212223827495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x6X3BldGVy,size_16,color_FFFFFF,t_70" alt="img"></p>
+</li>
+</ul>
+<h2 id="pytorch-in-CNN"><a href="#pytorch-in-CNN" class="headerlink" title="pytorch in CNN"></a>pytorch in CNN</h2><p>essential imports</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> torchvision.transforms <span class="keyword">import</span> ToTensor, Lambda, Compose</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+
+<p>import data</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Download training data from open datasets.</span></span><br><span class="line">training_data = datasets.FashionMNIST(</span><br><span class="line">    root=<span class="string">&quot;data&quot;</span>,</span><br><span class="line">    train=<span class="literal">True</span>,</span><br><span class="line">    download=<span class="literal">True</span>,</span><br><span class="line">    transform=ToTensor(),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Download test data from open datasets.</span></span><br><span class="line">test_data = datasets.FashionMNIST(</span><br><span class="line">    root=<span class="string">&quot;data&quot;</span>,</span><br><span class="line">    train=<span class="literal">False</span>,</span><br><span class="line">    download=<span class="literal">True</span>,</span><br><span class="line">    transform=ToTensor(),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>load data</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">batch_size = <span class="number">64</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create data loaders.</span></span><br><span class="line">train_dataloader = DataLoader(training_data, batch_size=batch_size)</span><br><span class="line">test_dataloader = DataLoader(test_data, batch_size=batch_size)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> X, y <span class="keyword">in</span> test_dataloader:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Shape of X [N, C, H, W]: &quot;</span>, X.shape)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Shape of y: &quot;</span>, y.shape, y.dtype)</span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>initialize model</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">device = <span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Using <span class="subst">&#123;device&#125;</span> device&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NeuralNetwork</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(NeuralNetwork, self).__init__()</span><br><span class="line">        self.flatten = nn.Flatten()</span><br><span class="line">        self.linear_relu_stack = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">28</span>*<span class="number">28</span>, <span class="number">512</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">512</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">10</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = self.flatten(x)</span><br><span class="line">        logits = self.linear_relu_stack(x)</span><br><span class="line">        <span class="keyword">return</span> logits</span><br><span class="line"></span><br><span class="line">model = NeuralNetwork().to(device)</span><br><span class="line"><span class="built_in">print</span>(model)</span><br></pre></td></tr></table></figure>
+
+<p>set loss function&#x2F;optimizer</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">loss_fn = nn.CrossEntropyLoss()</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">1e-3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>define the process of backpropagation</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">dataloader, model, loss_fn, optimizer</span>):</span><br><span class="line">    size = <span class="built_in">len</span>(dataloader.dataset)</span><br><span class="line">    model.train()</span><br><span class="line">    <span class="keyword">for</span> batch, (X, y) <span class="keyword">in</span> <span class="built_in">enumerate</span>(dataloader):</span><br><span class="line">        X, y = X.to(device), y.to(device)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Compute prediction error</span></span><br><span class="line">        pred = model(X)</span><br><span class="line">        loss = loss_fn(pred, y)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Backpropagation</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> batch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            loss, current = loss.item(), batch * <span class="built_in">len</span>(X)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;loss: <span class="subst">&#123;loss:&gt;7f&#125;</span>  [<span class="subst">&#123;current:&gt;5d&#125;</span>/<span class="subst">&#123;size:&gt;5d&#125;</span>]&quot;</span>)</span><br><span class="line">            </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">dataloader, model, loss_fn</span>):</span><br><span class="line">    size = <span class="built_in">len</span>(dataloader.dataset)</span><br><span class="line">    num_batches = <span class="built_in">len</span>(dataloader)</span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    test_loss, correct = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> X, y <span class="keyword">in</span> dataloader:</span><br><span class="line">            X, y = X.to(device), y.to(device)</span><br><span class="line">            pred = model(X)</span><br><span class="line">            test_loss += loss_fn(pred, y).item()</span><br><span class="line">            correct += (pred.argmax(<span class="number">1</span>) == y).<span class="built_in">type</span>(torch.<span class="built_in">float</span>).<span class="built_in">sum</span>().item()</span><br><span class="line">    test_loss /= num_batches</span><br><span class="line">    correct /= size</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Test Error: \n Accuracy: <span class="subst">&#123;(<span class="number">100</span>*correct):&gt;<span class="number">0.1</span>f&#125;</span>%, Avg loss: <span class="subst">&#123;test_loss:&gt;8f&#125;</span> \n&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>save the model&#x2F;load the model</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#save model</span></span><br><span class="line">torch.save(model.state_dict(), <span class="string">&quot;model.pth&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Saved PyTorch Model State to model.pth&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#load model</span></span><br><span class="line">model = NeuralNetwork()</span><br><span class="line">model.load_state_dict(torch.load(<span class="string">&quot;model.pth&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>verify the model</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">classes = [</span><br><span class="line">    <span class="string">&quot;T-shirt/top&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Trouser&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Pullover&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Dress&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Coat&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Sandal&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Shirt&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Sneaker&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Bag&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Ankle boot&quot;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">eval</span>()</span><br><span class="line">cnt=<span class="number">0</span></span><br><span class="line">i=<span class="number">0</span></span><br><span class="line">le=<span class="built_in">len</span>(test_data)</span><br><span class="line"><span class="keyword">while</span> (i&lt;<span class="built_in">len</span>(test_data)):</span><br><span class="line">    x, y = test_data[i][<span class="number">0</span>], test_data[i][<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        pred = model(x)</span><br><span class="line">        predicted, actual = classes[pred[<span class="number">0</span>].argmax(<span class="number">0</span>)], classes[y]</span><br><span class="line">        <span class="comment">#print(f&#x27;Predicted: &quot;&#123;predicted&#125;&quot;, Actual: &quot;&#123;actual&#125;&quot;&#x27;)</span></span><br><span class="line">        <span class="keyword">if</span> (predicted==actual):</span><br><span class="line">            cnt=cnt+<span class="number">1</span></span><br><span class="line">        i=i+<span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(cnt/le)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jingwengu0829.github.io/2022/01/16/deep%20learning/" data-id="cln84bevt0004aocngvhd5g36" data-title="deep learning and neural network" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/16/kaggle%20skills/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          4. useful functions in Kaggle
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/12/19/himcm/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">report of HIMCM</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coursera-books/">Coursera & books</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/academic-reports/">academic reports</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/club-report/">club report</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python-notes/">python notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/research/">research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/07/machine%20learning/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/02/01/h.264%20notes/">Principle of H.264 encoding</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/kaggle%20skills/">4. useful functions in Kaggle</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/deep%20learning/">deep learning and neural network</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/19/himcm/">report of HIMCM</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 AugustGu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -73,12 +73,509 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-machine learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/07/machine%20learning/" class="article-date">
+  <time class="dt-published" datetime="2022-03-07T10:26:08.000Z" itemprop="datePublished">2022-03-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Coursera-books/">Coursera & books</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="What-is-machine-learning"><a href="#What-is-machine-learning" class="headerlink" title="What is machine learning?"></a>What is machine learning?</h2><ul>
+<li>Tom Mitchell (1998): Well proposed Learning Problem: A computer program is said to learn from experience E concerning some task T and some performance measure P, improves with experience E.</li>
+<li>types of learning: supervised learning, unsupervised learning, reinforcement learning, recommender systems</li>
+</ul>
+<h2 id="supervised-learning"><a href="#supervised-learning" class="headerlink" title="supervised learning"></a>supervised learning</h2><ul>
+<li>house price prediction (regression problems, continuous values)</li>
+<li>breast cancer problem (classification, discrete values)</li>
+<li>“right answers are given”</li>
+</ul>
+<h2 id="unsupervised-learning"><a href="#unsupervised-learning" class="headerlink" title="unsupervised learning"></a>unsupervised learning</h2><ul>
+<li>Google news (cluster algorithm)</li>
+<li>organize computing clusters</li>
+<li>social network analysis</li>
+<li>market segmentation</li>
+<li>astronomical data analysis</li>
+</ul>
+<h2 id="model-representation"><a href="#model-representation" class="headerlink" title="model representation"></a>model representation</h2><h4 id="linear-regression"><a href="#linear-regression" class="headerlink" title="linear regression"></a>linear regression</h4><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gwje9fhnt6j31c40lmq3t.jpg" alt="IMG_C63477680138-1"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gwjeht1072j31760njdil.jpg" alt="IMG_278B7C299CBF-1"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gwjembiew5j31840i6ach.jpg" alt="IMG_2526"></p>
+<h4 id="gradient-descent"><a href="#gradient-descent" class="headerlink" title="gradient descent"></a>gradient descent</h4><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gwjew1oo7fj314n0ki0tz.jpg" alt="IMG_76DC8AD6FBCF-1"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jingwengu0829.github.io/2022/03/07/machine%20learning/" data-id="cln84bevx000daocn4g8n60xx" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-h.264 notes" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/02/01/h.264%20notes/" class="article-date">
+  <time class="dt-published" datetime="2022-02-02T07:05:18.000Z" itemprop="datePublished">2022-02-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/research/">research</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/02/01/h.264%20notes/">Principle of H.264 encoding</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Principle-of-H-264-encoding"><a href="#Principle-of-H-264-encoding" class="headerlink" title="Principle of  H.264 encoding"></a>Principle of  H.264 encoding</h2><h4 id="compression-technique"><a href="#compression-technique" class="headerlink" title="compression technique"></a>compression technique</h4><ul>
+<li>prediction compression between frames（solve the problem of data redundancy across time）</li>
+<li>prediction inside a frame（solve the problem of data redundancy between spaces）</li>
+<li>Discrete Cosine Transform（DCT）</li>
+<li>CABAC compression（lossless compression）</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gyz6d7xtcej30go07agly.jpg" alt="1307424-20181107190652710-1225388271"></p>
+<h4 id="specific-procedure"><a href="#specific-procedure" class="headerlink" title="specific procedure"></a>specific procedure</h4><ul>
+<li>division of macroblock<ul>
+<li>frames in H.264 converted into macroblocks </li>
+<li>default size: 16*16</li>
+</ul>
+</li>
+<li>division of frames<ul>
+<li>store one frame, produce other frames by prediction<ul>
+<li>I frame：keyframe</li>
+<li>P frame：向前参考帧，在压缩时，只参考前面已经处理的帧。采用帧音压缩技术。</li>
+<li>B frame：双向参考帧，在压缩时，它即参考前而的帧，又参考它后面的帧。采用帧间压缩技术。</li>
+</ul>
+</li>
+<li>H264 encoder takes out two frames in order from the video clip， then it performs a macroblock scan</li>
+<li>when it detects that there’s an object in a certain place in one frame, it searches for the object in a similar position in the other frame。</li>
+<li>if the object is found out in the other graph, the motion vector of the object can be successfully calculated</li>
+<li>only store the motion vector and the keyframe</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gyz627iyzhj30ow0e0wek.jpg" alt="8daa7e6a344a9a74ff8711c72b1404f4.png"></p>
+<ul>
+<li>prediction inside a frame（only I frame）<ul>
+<li>9 prediction modes， find the optimal solution</li>
+<li>calculate the residual value</li>
+<li>store the prediction value and residual value</li>
+</ul>
+</li>
+<li>Use DCT on the residual value</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jingwengu0829.github.io/2022/02/01/h.264%20notes/" data-id="cln84bevv0007aocncgtcch9f" data-title="Principle of H.264 encoding" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-kaggle skills" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/kaggle%20skills/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T23:10:54.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python-notes/">python notes</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/16/kaggle%20skills/">4. useful functions in Kaggle</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="analyzing-the-data"><a href="#analyzing-the-data" class="headerlink" title="analyzing the data"></a>analyzing the data</h4><p>key steps in analyzing data:</p>
+<ul>
+<li>correlating</li>
+<li>completing</li>
+<li>correcting</li>
+<li>creating</li>
+<li>Classifying</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#discription</span></span><br><span class="line">df_train[<span class="string">&#x27;title&#x27;</span>].describe</span><br><span class="line">df_train.info()</span><br><span class="line">df_train.describe()</span><br><span class="line"></span><br><span class="line"><span class="comment">#histogram</span></span><br><span class="line">sns.distplot(df_train[<span class="string">&#x27;title&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#skewness and kurtosis</span></span><br><span class="line">df_train[<span class="string">&#x27;title&#x27;</span>].skew()</span><br><span class="line">df_train[<span class="string">&#x27;title&#x27;</span>].kurt()</span><br><span class="line"></span><br><span class="line"><span class="comment">#plot scattered graph of matrix</span></span><br><span class="line">cols=[<span class="string">&#x27;1&#x27;</span>,<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;3&#x27;</span>,<span class="string">&#x27;4&#x27;</span>]</span><br><span class="line">sns.pairplot(<span class="string">&#x27;cols&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#correlation index</span></span><br><span class="line">title.corr()</span><br><span class="line"></span><br><span class="line"><span class="comment">#relationship between categorical features</span></span><br><span class="line">sns.boxplot()</span><br><span class="line"></span><br><span class="line"><span class="comment">#check if any missing data</span></span><br><span class="line">total = df_train.isnull().<span class="built_in">sum</span>().sort_values(ascending=<span class="literal">False</span>)</span><br><span class="line">percent = (df_train.isnull().<span class="built_in">sum</span>()/df_train.isnull().count()).sort_values(ascending=<span class="literal">False</span>)</span><br><span class="line">missing_data = pd.concat([total, percent], axis=<span class="number">1</span>, keys=[<span class="string">&#x27;Total&#x27;</span>, <span class="string">&#x27;Percent&#x27;</span>])</span><br><span class="line">missing_data.head(<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#dealing with missing data</span></span><br><span class="line">df_train.drop()</span><br><span class="line"></span><br><span class="line"><span class="comment">#standardize data</span></span><br><span class="line">StandardScaler().fit_transform(df_train)</span><br><span class="line"></span><br><span class="line"><span class="comment">#normalize the data</span></span><br><span class="line">np.log(df_train[<span class="string">&#x27;i&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id="building-up-models"><a href="#building-up-models" class="headerlink" title="building up models"></a>building up models</h4><p>commonly used models </p>
+<ul>
+<li>Logistic regression</li>
+<li>KNN</li>
+<li>SVM</li>
+<li>Naive Bayes Classifier</li>
+<li>Decsion Tree</li>
+<li>Random Forest</li>
+<li>Artificial Neural network</li>
+<li>RVM</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># method to calculate the confidence score</span></span><br><span class="line"><span class="built_in">round</span>(model.score(X_train,Y_train)*<span class="number">100</span>,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jingwengu0829.github.io/2022/01/16/kaggle%20skills/" data-id="cln84bevw000baocn92ny3ta5" data-title="4. useful functions in Kaggle" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-deep learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/16/deep%20learning/" class="article-date">
+  <time class="dt-published" datetime="2022-01-16T11:30:22.000Z" itemprop="datePublished">2022-01-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/research/">research</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/01/16/deep%20learning/">deep learning and neural network</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>convolutional neural network</p>
+<h4 id="layers-of-CNN"><a href="#layers-of-CNN" class="headerlink" title="layers of CNN"></a><img src="https://pic4.zhimg.com/80/v2-e7dd00d7fda722d5f8f70a9928e95a17_1440w.jpg" alt="img">layers of CNN</h4><ul>
+<li>input layer</li>
+<li>convolution layer</li>
+<li>ReLu layer</li>
+<li>Pooling</li>
+<li>fully connected-layer</li>
+</ul>
+<h4 id="convolution-layer"><a href="#convolution-layer" class="headerlink" title="convolution layer"></a>convolution layer</h4><ul>
+<li>kernel&#x2F;filter ( matrix, scanning over the original image to do the dot multiplication)</li>
+<li>extract the high-level features such as edges, from the input image</li>
+<li>Padding: remain the same size as before</li>
+</ul>
+<h4 id="pooling-layer"><a href="#pooling-layer" class="headerlink" title="pooling layer"></a>pooling layer</h4><ul>
+<li>Down-sampling</li>
+<li>responsible for reducing the spatial size of the convolved feature</li>
+<li>decrease the computational power required to process the data </li>
+<li>max pooling, average pooling (max is much better)</li>
+<li>noise suppressant</li>
+</ul>
+<h4 id="fully-connected-layer"><a href="#fully-connected-layer" class="headerlink" title="fully connected layer"></a>fully connected layer</h4><ul>
+<li><p>softmax classification technique</p>
+<p><img src="https://img-blog.csdnimg.cn/20181212223827495.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2x6X3BldGVy,size_16,color_FFFFFF,t_70" alt="img"></p>
+</li>
+</ul>
+<h2 id="pytorch-in-CNN"><a href="#pytorch-in-CNN" class="headerlink" title="pytorch in CNN"></a>pytorch in CNN</h2><p>essential imports</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> torchvision.transforms <span class="keyword">import</span> ToTensor, Lambda, Compose</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+
+<p>import data</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Download training data from open datasets.</span></span><br><span class="line">training_data = datasets.FashionMNIST(</span><br><span class="line">    root=<span class="string">&quot;data&quot;</span>,</span><br><span class="line">    train=<span class="literal">True</span>,</span><br><span class="line">    download=<span class="literal">True</span>,</span><br><span class="line">    transform=ToTensor(),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Download test data from open datasets.</span></span><br><span class="line">test_data = datasets.FashionMNIST(</span><br><span class="line">    root=<span class="string">&quot;data&quot;</span>,</span><br><span class="line">    train=<span class="literal">False</span>,</span><br><span class="line">    download=<span class="literal">True</span>,</span><br><span class="line">    transform=ToTensor(),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>load data</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">batch_size = <span class="number">64</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create data loaders.</span></span><br><span class="line">train_dataloader = DataLoader(training_data, batch_size=batch_size)</span><br><span class="line">test_dataloader = DataLoader(test_data, batch_size=batch_size)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> X, y <span class="keyword">in</span> test_dataloader:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Shape of X [N, C, H, W]: &quot;</span>, X.shape)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Shape of y: &quot;</span>, y.shape, y.dtype)</span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>initialize model</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">device = <span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Using <span class="subst">&#123;device&#125;</span> device&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NeuralNetwork</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(NeuralNetwork, self).__init__()</span><br><span class="line">        self.flatten = nn.Flatten()</span><br><span class="line">        self.linear_relu_stack = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">28</span>*<span class="number">28</span>, <span class="number">512</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">512</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Linear(<span class="number">512</span>, <span class="number">10</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = self.flatten(x)</span><br><span class="line">        logits = self.linear_relu_stack(x)</span><br><span class="line">        <span class="keyword">return</span> logits</span><br><span class="line"></span><br><span class="line">model = NeuralNetwork().to(device)</span><br><span class="line"><span class="built_in">print</span>(model)</span><br></pre></td></tr></table></figure>
+
+<p>set loss function&#x2F;optimizer</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">loss_fn = nn.CrossEntropyLoss()</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">1e-3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>define the process of backpropagation</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">dataloader, model, loss_fn, optimizer</span>):</span><br><span class="line">    size = <span class="built_in">len</span>(dataloader.dataset)</span><br><span class="line">    model.train()</span><br><span class="line">    <span class="keyword">for</span> batch, (X, y) <span class="keyword">in</span> <span class="built_in">enumerate</span>(dataloader):</span><br><span class="line">        X, y = X.to(device), y.to(device)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Compute prediction error</span></span><br><span class="line">        pred = model(X)</span><br><span class="line">        loss = loss_fn(pred, y)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Backpropagation</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> batch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            loss, current = loss.item(), batch * <span class="built_in">len</span>(X)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;loss: <span class="subst">&#123;loss:&gt;7f&#125;</span>  [<span class="subst">&#123;current:&gt;5d&#125;</span>/<span class="subst">&#123;size:&gt;5d&#125;</span>]&quot;</span>)</span><br><span class="line">            </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">dataloader, model, loss_fn</span>):</span><br><span class="line">    size = <span class="built_in">len</span>(dataloader.dataset)</span><br><span class="line">    num_batches = <span class="built_in">len</span>(dataloader)</span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    test_loss, correct = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> X, y <span class="keyword">in</span> dataloader:</span><br><span class="line">            X, y = X.to(device), y.to(device)</span><br><span class="line">            pred = model(X)</span><br><span class="line">            test_loss += loss_fn(pred, y).item()</span><br><span class="line">            correct += (pred.argmax(<span class="number">1</span>) == y).<span class="built_in">type</span>(torch.<span class="built_in">float</span>).<span class="built_in">sum</span>().item()</span><br><span class="line">    test_loss /= num_batches</span><br><span class="line">    correct /= size</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Test Error: \n Accuracy: <span class="subst">&#123;(<span class="number">100</span>*correct):&gt;<span class="number">0.1</span>f&#125;</span>%, Avg loss: <span class="subst">&#123;test_loss:&gt;8f&#125;</span> \n&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>save the model&#x2F;load the model</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#save model</span></span><br><span class="line">torch.save(model.state_dict(), <span class="string">&quot;model.pth&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Saved PyTorch Model State to model.pth&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#load model</span></span><br><span class="line">model = NeuralNetwork()</span><br><span class="line">model.load_state_dict(torch.load(<span class="string">&quot;model.pth&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>verify the model</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">classes = [</span><br><span class="line">    <span class="string">&quot;T-shirt/top&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Trouser&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Pullover&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Dress&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Coat&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Sandal&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Shirt&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Sneaker&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Bag&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Ankle boot&quot;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">eval</span>()</span><br><span class="line">cnt=<span class="number">0</span></span><br><span class="line">i=<span class="number">0</span></span><br><span class="line">le=<span class="built_in">len</span>(test_data)</span><br><span class="line"><span class="keyword">while</span> (i&lt;<span class="built_in">len</span>(test_data)):</span><br><span class="line">    x, y = test_data[i][<span class="number">0</span>], test_data[i][<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        pred = model(x)</span><br><span class="line">        predicted, actual = classes[pred[<span class="number">0</span>].argmax(<span class="number">0</span>)], classes[y]</span><br><span class="line">        <span class="comment">#print(f&#x27;Predicted: &quot;&#123;predicted&#125;&quot;, Actual: &quot;&#123;actual&#125;&quot;&#x27;)</span></span><br><span class="line">        <span class="keyword">if</span> (predicted==actual):</span><br><span class="line">            cnt=cnt+<span class="number">1</span></span><br><span class="line">        i=i+<span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(cnt/le)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jingwengu0829.github.io/2022/01/16/deep%20learning/" data-id="cln84bevt0004aocngvhd5g36" data-title="deep learning and neural network" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-himcm" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/12/19/himcm/" class="article-date">
+  <time class="dt-published" datetime="2021-12-19T10:36:56.000Z" itemprop="datePublished">2021-12-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/academic-reports/">academic reports</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/12/19/himcm/">report of HIMCM</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>At the beginning of my 11th grade, I participated in the HIMCM, which is the High School Mathematical Contest in Modeling, with other three classmates in my school. We spent tens of hours together before the contest, learning basic knowledge needed for mathematical modeling before the contest. During the contest, we spent a week discussing possible solutions to the topic given.</p>
+<h2 id="Before-the-contest"><a href="#Before-the-contest" class="headerlink" title="Before the contest"></a>Before the contest</h2><h2 id="During-the-contest"><a href="#During-the-contest" class="headerlink" title="During the contest"></a>During the contest</h2><h2 id="The-outcome-of-the-contest"><a href="#The-outcome-of-the-contest" class="headerlink" title="The outcome of the contest"></a>The outcome of the contest</h2><h2 id="what-I’ve-learned-from-the-contest"><a href="#what-I’ve-learned-from-the-contest" class="headerlink" title="what I’ve learned from the contest"></a>what I’ve learned from the contest</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jingwengu0829.github.io/2021/12/19/himcm/" data-id="cln84bevw0008aocn79ujczgk" data-title="report of HIMCM" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-coding" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/12/14/coding/" class="article-date">
+  <time class="dt-published" datetime="2021-12-15T07:33:50.000Z" itemprop="datePublished">2021-12-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Coursera-books/">Coursera & books</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/12/14/coding/">reading report of coding</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>to be released</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jingwengu0829.github.io/2021/12/14/coding/" data-id="cln84bevt0003aocnce815fld" data-title="reading report of coding" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-reading report(2)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/12/14/reading%20report(2)/" class="article-date">
+  <time class="dt-published" datetime="2021-12-15T07:12:36.000Z" itemprop="datePublished">2021-12-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Coursera-books/">Coursera & books</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/12/14/reading%20report(2)/">history of physics(1)--reading report of {does god roll dice?-the brief history of physics}</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="history-of-physics"><a href="#history-of-physics" class="headerlink" title="history of physics"></a>history of physics</h2><h4 id="the-brief-history-of-the-development-of-the-light-in-classic-physics"><a href="#the-brief-history-of-the-development-of-the-light-in-classic-physics" class="headerlink" title="the brief history  of the development of the light in classic physics"></a>the brief history  of the development of the light in classic physics</h4><p>**  a debate on the light– a wave or a particle?  **</p>
+<h5 id="1-what-is-light"><a href="#1-what-is-light" class="headerlink" title="1. what is light?"></a>1. what is light?</h5><p>Light, something that people observe the most every day, “should be”the most ancient thing ever existed in the universe. But WHAT IS LIGHT? In ancient Greece, scientists used to assume light is something people discharged from their eyes. But this hypothesis has lots of flaws, for example, why can’t people see in the dark if they can discharge light?</p>
+<p>When it comes to Rome, Lucretius claims light comes from objects, instead of eyes. In the next thousands of years, scientists figured out the way light reflects, refracts. And as the famous scientist Pierre de Fermat concluded “the path taken between two points by a ray of light is the path that can be traversed in the least time”, people gained a brief view of light.</p>
+<h5 id="2-what-on-earth-is-light"><a href="#2-what-on-earth-is-light" class="headerlink" title="2. what on earth is light?!!!"></a>2. what on earth is light?!!!</h5><p>​         In Ancient Greece, people used to consider light as a stream of “light particles”. They assume light is a particle because of lots of reasons–the way light reflects, the way light travels…..But as people discovered that sound is a wave, they started to suggest that light is a wave, too. The theory that light is a wave can explain a lot of things like why two lights can pass through each other. But they are still one thing that scientists supporting light as a wave can not explain—why light can travel in a vacuum (wave travel by the vibration and collision of particles in the media).</p>
+<h5 id="3-“the-world-war”"><a href="#3-“the-world-war”" class="headerlink" title="3. “the world war”"></a>3. “the world war”</h5><p>​    In the following thousand of years, scientists, no matter supporting wave theory or particle theory, tried their best to improve their theory because there are so many things they can not explain, using their theory. However, things changed as two British scientists appeared on the stage of physics. In 1665, Robert Hook, suggest that the difference in the color of light is because of the different frequencies of light waves. Soonly afterward, Newton find the spectra of lights. He explained the spectra by supporting the theory of particles–white light is a mixture of different types of particles. Both of them were sensitive, ignorant, and conceit. They started to attack each other, and kept on attacking till they die. Two years after the death of Hook, Issac Newton released one of the most important books in the history of physics [optics]. He explained nearly any doubt about light using the theory. From then on, Isaac Newton has constructed a complex physics system using his theory in kinematics and light. In the following one thousand years, nobody even attempted to challenge Newton. It seems that the particle theory got a complete win against the wave theory.</p>
+<hr>
+<h5 id="4-the-challenger"><a href="#4-the-challenger" class="headerlink" title="4. the challenger"></a>4. the challenger</h5><p>In 1807, a young British scientist released his famous book called 「A Course of Lectures on Natural Philosophy and the Mechanical Arts 」 In this book, young explained his famous experiment–two-slit interference. The</p>
+<p>the way the experiment works is shown in the picture below</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gndvt1r2bnj30dw0bgaas.jpg"></p>
+<p>In this experiment, young gives strong evidence supporting light is a wave. Only waves can overlap and form the figure like strips. Although the evidence is strong and destructive to the particle theory, nobody at that time dared to doubt the theory of Newton. Things changed completely in 1819，a young French architect, Augustin Fresnel, found an interesting phenomenon and explained the diffraction of light. But the theory still leaves something that scientists can not explain—why light can travel in a vacuum? Scientists used to use the word “ether” to explain. But none of them could explain that what is ether.</p>
+<h5 id="5-another-huge-success"><a href="#5-another-huge-success" class="headerlink" title="5. another huge success"></a>5. another huge success</h5><p>In 1887, a young German scientist Heinrich Hertz proved the existence of electromagnetic waves predicted by Maxwell. He finished and completed the theory first suggested by Faraday. By this theory, light is classified as a type of electromagnetic wave, so that it can travel through vacuum easily. </p>
+<h5 id="6-mystery-never-ends"><a href="#6-mystery-never-ends" class="headerlink" title="6. mystery never ends"></a>6. mystery never ends</h5><p>The theory of wave seems to be dominant in the field of history. Everything seems so peaceful and everything seems to be able to be explained by the theory from Maxwell. However, problems are still left.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jingwengu0829.github.io/2021/12/14/reading%20report(2)/" data-id="cln84bew3000vaocn814kh9ds" data-title="history of physics(1)--reading report of {does god roll dice?-the brief history of physics}" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/12/14/2/" class="article-date">
+  <time class="dt-published" datetime="2021-12-15T07:06:52.000Z" itemprop="datePublished">2021-12-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/club-report/">club report</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/12/14/2/">project) serial communication - (rocking bar + serial communication + pygame)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="introduction-to-rocking-bar-and-Arduino-serial-communications"><a href="#introduction-to-rocking-bar-and-Arduino-serial-communications" class="headerlink" title="introduction to rocking bar and Arduino serial communications"></a>introduction to rocking bar and Arduino serial communications</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gw9bwin56sj307w074aa3.jpg" alt="20151223124315227"></p>
+<ul>
+<li><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gw9q1ksw2aj31vk0eoadl.jpg" alt="截屏2021-11-10 上午7.54.16"></li>
+<li><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gw9q3azwooj317o0eoq52.jpg" alt="截屏2021-11-10 上午7.56.03"></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> value = <span class="number">0</span>; </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123; </span><br><span class="line"> <span class="built_in">pinMode</span>(<span class="number">7</span>, INPUT_PULLUP); </span><br><span class="line"> Serial.<span class="built_in">begin</span>(<span class="number">9600</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123; </span><br><span class="line"> value = <span class="built_in">analogRead</span>(A0); </span><br><span class="line"> Serial.<span class="built_in">print</span>(<span class="string">&quot;X:&quot;</span>); </span><br><span class="line"> Serial.<span class="built_in">print</span>(value, DEC); </span><br><span class="line"> value = <span class="built_in">analogRead</span>(A1); </span><br><span class="line"> Serial.<span class="built_in">print</span>(<span class="string">&quot; | Y:&quot;</span>); </span><br><span class="line"> Serial.<span class="built_in">print</span>(value, DEC); </span><br><span class="line"> value = <span class="built_in">digitalRead</span>(<span class="number">7</span>); </span><br><span class="line"> Serial.<span class="built_in">print</span>(<span class="string">&quot; | Z: &quot;</span>); </span><br><span class="line"> Serial.<span class="built_in">println</span>(value, DEC); </span><br><span class="line"> <span class="built_in">delay</span>(<span class="number">100</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="implement-a-version-which-can-be-easily-processed-by-python"><a href="#implement-a-version-which-can-be-easily-processed-by-python" class="headerlink" title="implement - a version which can be easily processed by python"></a>implement - a version which can be easily processed by python</h4><p>Convert the output into the version of decimal number+ blank space + decimal number+ blank space + decimal number, which can be easily used by python.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> value = <span class="number">0</span>; </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123; </span><br><span class="line"> <span class="built_in">pinMode</span>(<span class="number">7</span>, INPUT_PULLUP); </span><br><span class="line"> Serial.<span class="built_in">begin</span>(<span class="number">9600</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123; </span><br><span class="line"> value = <span class="built_in">analogRead</span>(A0); </span><br><span class="line"> Serial.<span class="built_in">print</span>(value, DEC); </span><br><span class="line"> Serial.<span class="built_in">print</span>(<span class="string">&#x27; &#x27;</span>); </span><br><span class="line"> value = <span class="built_in">analogRead</span>(A1);</span><br><span class="line"> Serial.<span class="built_in">print</span>(value, DEC); </span><br><span class="line"> Serial.<span class="built_in">print</span>(<span class="string">&#x27; &#x27;</span>); </span><br><span class="line"> value = <span class="built_in">digitalRead</span>(<span class="number">7</span>);</span><br><span class="line"> Serial.<span class="built_in">println</span>(value, DEC); </span><br><span class="line"> <span class="built_in">delay</span>(<span class="number">100</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="python-receive-data-from-the-serial-communication"><a href="#python-receive-data-from-the-serial-communication" class="headerlink" title="python: receive data from the serial communication"></a>python: receive data from the serial communication</h4><ul>
+<li>data is read from the serial at a fast rate and are stored to the variable “ser”</li>
+<li>a continuous “while” loops makes sure “str” is always receiving data from the “serial”</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"></span><br><span class="line">serialPort = <span class="string">&quot;/dev/cu.usbmodem11101&quot;</span>  <span class="comment"># port</span></span><br><span class="line">baudRate = <span class="number">9600</span>  <span class="comment"># baud rate</span></span><br><span class="line">ser = serial.Serial(serialPort, baudRate, timeout=<span class="number">0.5</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    <span class="built_in">str</span> = ser.readline()</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">str</span>)</span><br><span class="line"></span><br><span class="line">ser.close()</span><br></pre></td></tr></table></figure>
+
+<h4 id="Python-implement-to-convert-data-into-a-form-that-can-be-easily-processed"><a href="#Python-implement-to-convert-data-into-a-form-that-can-be-easily-processed" class="headerlink" title="Python: implement to convert data into a form that can be easily processed"></a>Python: implement to convert data into a form that can be easily processed</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"></span><br><span class="line">serialPort = <span class="string">&quot;/dev/cu.usbmodem11101&quot;</span>  <span class="comment"># port</span></span><br><span class="line">baudRate = <span class="number">9600</span>  <span class="comment"># baud rate</span></span><br><span class="line">ser = serial.Serial(serialPort, baudRate, timeout=<span class="number">0.5</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    <span class="built_in">str</span> = ser.readline()</span><br><span class="line">            a=<span class="built_in">str</span>.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            <span class="built_in">list</span>=a.split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(<span class="built_in">list</span>)&gt;<span class="number">1</span>:</span><br><span class="line">                x_axis=((<span class="built_in">int</span>(<span class="built_in">list</span>[<span class="number">0</span>]))-<span class="number">512</span>)/<span class="number">80</span></span><br><span class="line">                y_axis=((<span class="built_in">int</span>(<span class="built_in">list</span>[<span class="number">1</span>]))-<span class="number">512</span>)/<span class="number">80</span></span><br><span class="line"></span><br><span class="line">ser.close()</span><br></pre></td></tr></table></figure>
+
+<h4 id="pygame-an-approach-to-develop-simple-games-based-on-python"><a href="#pygame-an-approach-to-develop-simple-games-based-on-python" class="headerlink" title="pygame: an approach to develop simple games based on python"></a>pygame: an approach to develop simple games based on python</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">pygame.init()  <span class="comment"># initialize pygame</span></span><br><span class="line">size = width, height = <span class="number">960</span>,<span class="number">720</span>   <span class="comment"># set the size of pygame</span></span><br><span class="line">screen = pygame.display.set_mode(size)  <span class="comment"># show the interface</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:  </span><br><span class="line">    <span class="keyword">for</span> event <span class="keyword">in</span> pygame.event.get():  </span><br><span class="line">        <span class="keyword">if</span> event.<span class="built_in">type</span> == pygame.QUIT:  </span><br><span class="line">            sys.exit()</span><br><span class="line"></span><br><span class="line">pygame.quit()  <span class="comment"># exit pygame</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="pygame-an-designed-example-of-game"><a href="#pygame-an-designed-example-of-game" class="headerlink" title="pygame: an designed example of game"></a>pygame: an designed example of game</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame, sys</span><br><span class="line"><span class="keyword">from</span> pygame.<span class="built_in">locals</span> <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;driving plane to dodge enemies&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># choose by probability</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">choice</span>(<span class="params">seq, prob</span>):</span><br><span class="line">    p = random.random()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(seq)):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">sum</span>(prob[:i]) &lt; p &lt; <span class="built_in">sum</span>(prob[:i+<span class="number">1</span>]):</span><br><span class="line">            <span class="keyword">return</span> seq[i]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># player</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PlayerSprite</span>(pygame.sprite.Sprite):</span><br><span class="line">    speed = <span class="number">5</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>): </span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.image = pygame.image.load(<span class="string">&#x27;/Users/august/Desktop/社团/pygame/plane.jpeg&#x27;</span>).convert() <span class="comment"># load function</span></span><br><span class="line">        self.image.set_colorkey((<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>), RLEACCEL)</span><br><span class="line">        self.rect = self.image.get_rect()</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="keyword">if</span> key[K_UP]:</span><br><span class="line">            self.rect.move_ip(<span class="number">0</span>, -self.speed)</span><br><span class="line">        <span class="keyword">if</span> key[K_DOWN]:</span><br><span class="line">            self.rect.move_ip(<span class="number">0</span>, self.speed)</span><br><span class="line">        <span class="keyword">if</span> key[K_LEFT]:</span><br><span class="line">            self.rect.move_ip(-self.speed, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">if</span> key[K_RIGHT]:</span><br><span class="line">            self.rect.move_ip(self.speed, <span class="number">0</span>)</span><br><span class="line">            </span><br><span class="line">        <span class="comment"># limit player in the screen</span></span><br><span class="line">        <span class="keyword">if</span> self.rect.left &lt; <span class="number">0</span>:</span><br><span class="line">            self.rect.left = <span class="number">0</span></span><br><span class="line">        <span class="keyword">elif</span> self.rect.right &gt; <span class="number">800</span>:</span><br><span class="line">            self.rect.right = <span class="number">800</span></span><br><span class="line">        <span class="keyword">if</span> self.rect.top &lt;= <span class="number">0</span>:</span><br><span class="line">            self.rect.top = <span class="number">0</span></span><br><span class="line">        <span class="keyword">elif</span> self.rect.bottom &gt;= <span class="number">600</span>:</span><br><span class="line">            self.rect.bottom = <span class="number">600</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># enemy</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EnemySprite</span>(pygame.sprite.Sprite):</span><br><span class="line">    speed = choice([<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>], [<span class="number">0.5</span>, <span class="number">0.4</span>, <span class="number">0.1</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.image = pygame.image.load(<span class="string">&#x27;/Users/august/Desktop/社团/pygame/enemy.jpeg&#x27;</span>).convert()</span><br><span class="line">        self.image.set_colorkey((<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>), RLEACCEL)</span><br><span class="line">        self.rect = self.image.get_rect(center=(<span class="number">820</span>, random.randint(<span class="number">0</span>, <span class="number">600</span>)))</span><br><span class="line">        <span class="comment">#self.speed = random.randint(5, 20)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self</span>):</span><br><span class="line">        self.rect.move_ip(-self.speed, <span class="number">0</span>) <span class="comment"># from right to left</span></span><br><span class="line">        <span class="keyword">if</span> self.rect.right &lt; <span class="number">0</span>:</span><br><span class="line">            self.kill() <span class="comment"># Sprite&#x27;s inner built method</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># white cloud</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CloudSprite</span>(pygame.sprite.Sprite):</span><br><span class="line">    speed = choice([<span class="number">1</span>,<span class="number">2</span>], [<span class="number">0.8</span>, <span class="number">0.2</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.image = pygame.image.load(<span class="string">&#x27;/Users/august/Desktop/社团/pygame/cloud.jpeg&#x27;</span>).convert()</span><br><span class="line">        self.image.set_colorkey((<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>),RLEACCEL)</span><br><span class="line">        self.rect = self.image.get_rect(</span><br><span class="line">            center = (random.randint(<span class="number">820</span>,<span class="number">900</span>),random.randint(<span class="number">0</span>,<span class="number">600</span>))</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self</span>):</span><br><span class="line">        self.rect.move_ip(-self.speed,<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">if</span> self.rect.right &lt; <span class="number">0</span>:</span><br><span class="line">            self.kill()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># background</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BackgroundSprite</span>(pygame.sprite.Sprite):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, size</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.image = pygame.Surface(size)  </span><br><span class="line">        self.image.fill((<span class="number">135</span>, <span class="number">206</span>, <span class="number">250</span>)) <span class="comment"># light blue</span></span><br><span class="line">        self.rect = pygame.Rect(<span class="number">0</span>, <span class="number">0</span>, *size)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Game</span>():</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># initialization of the game</span></span><br><span class="line">        pygame.init()</span><br><span class="line"></span><br><span class="line">        self.size = self.width, self.height = <span class="number">800</span>, <span class="number">600</span></span><br><span class="line">        self.screen = pygame.display.set_mode(self.size)</span><br><span class="line"></span><br><span class="line">        pygame.display.set_caption(<span class="string">&quot;Pygame 2D RPG !&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        self.ADDENEMY = pygame.USEREVENT + <span class="number">1</span>     </span><br><span class="line">        pygame.time.set_timer(self.ADDENEMY, <span class="number">250</span>) </span><br><span class="line">        self.ADDCLOUD = pygame.USEREVENT + <span class="number">2</span>        </span><br><span class="line">        pygame.time.set_timer(self.ADDCLOUD, <span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">   </span><br><span class="line">        self.background = BackgroundSprite(self.size)</span><br><span class="line">        self.player = PlayerSprite()</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        self.enemies = pygame.sprite.Group()</span><br><span class="line">        self.clouds = pygame.sprite.Group()</span><br><span class="line">        self.all_sprites = pygame.sprite.Group()</span><br><span class="line">        </span><br><span class="line">        self.all_sprites.add(self.player)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># main loop</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:   </span><br><span class="line">            <span class="keyword">for</span> event <span class="keyword">in</span> pygame.event.get():</span><br><span class="line">                <span class="keyword">if</span> event.<span class="built_in">type</span> == QUIT:</span><br><span class="line">                    pygame.quit()</span><br><span class="line">                    sys.exit()       </span><br><span class="line">                <span class="keyword">elif</span> event.<span class="built_in">type</span> == KEYDOWN:           </span><br><span class="line">                    <span class="keyword">if</span> event.key == K_ESCAPE:</span><br><span class="line">                        pygame.quit()</span><br><span class="line">                        sys.exit()                </span><br><span class="line">                <span class="keyword">elif</span> event.<span class="built_in">type</span> == self.ADDENEMY: </span><br><span class="line">                    new_enemy = EnemySprite()</span><br><span class="line">                    self.enemies.add(new_enemy)</span><br><span class="line">                    self.all_sprites.add(new_enemy)</span><br><span class="line">                <span class="keyword">elif</span> event.<span class="built_in">type</span> == self.ADDCLOUD: </span><br><span class="line">                    new_cloud = CloudSprite()</span><br><span class="line">                    self.clouds.add(new_cloud)</span><br><span class="line">                    self.all_sprites.add(new_cloud)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># background</span></span><br><span class="line">            self.screen.blit(self.background.image, self.background.rect)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># obtain the key</span></span><br><span class="line">            key = pygame.key.get_pressed()</span><br><span class="line">            </span><br><span class="line">            self.player.update(key)</span><br><span class="line">            self.enemies.update()</span><br><span class="line">            self.clouds.update()</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> sprite <span class="keyword">in</span> self.all_sprites:</span><br><span class="line">                self.screen.blit(sprite.image, sprite.rect)</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> pygame.sprite.spritecollideany(self.player, self.enemies):</span><br><span class="line">                self.player.kill()</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&#x27;collision!&#x27;</span>)</span><br><span class="line">               </span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            </span><br><span class="line">            pygame.display.flip()</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    Game().run()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="finally-adding-arduino-and-pygame-together"><a href="#finally-adding-arduino-and-pygame-together" class="headerlink" title="finally: adding arduino and pygame together"></a>finally: adding arduino and pygame together</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"><span class="keyword">import</span> pygame, sys</span><br><span class="line"><span class="keyword">from</span> pygame.<span class="built_in">locals</span> <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">serialPort = <span class="string">&quot;/dev/cu.usbmodem11201&quot;</span>  </span><br><span class="line">baudRate = <span class="number">9600</span> </span><br><span class="line">ser = serial.Serial(serialPort, baudRate, timeout=<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据概率随机选取</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">choice</span>(<span class="params">seq, prob</span>):</span><br><span class="line">    p = random.random()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(seq)):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">sum</span>(prob[:i]) &lt; p &lt; <span class="built_in">sum</span>(prob[:i+<span class="number">1</span>]):</span><br><span class="line">            <span class="keyword">return</span> seq[i]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 玩家</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PlayerSprite</span>(pygame.sprite.Sprite):</span><br><span class="line">    speed = <span class="number">5</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>): </span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.image = pygame.image.load(<span class="string">&#x27;/Users/august/Desktop/社团/pygame/plane.jpeg&#x27;</span>).convert() <span class="comment"># load函数，返回一个 Surface 对象</span></span><br><span class="line">        self.image.set_colorkey((<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>), RLEACCEL)</span><br><span class="line">        self.rect = self.image.get_rect()</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, x_axis,y_axis</span>):</span><br><span class="line">        </span><br><span class="line">        self.rect.move_ip(x_axis,y_axis)</span><br><span class="line">        </span><br><span class="line">            </span><br><span class="line">        <span class="comment"># 限定player在屏幕中</span></span><br><span class="line">        <span class="keyword">if</span> self.rect.left &lt; <span class="number">0</span>:</span><br><span class="line">            self.rect.left = <span class="number">0</span></span><br><span class="line">        <span class="keyword">elif</span> self.rect.right &gt; <span class="number">800</span>:</span><br><span class="line">            self.rect.right = <span class="number">800</span></span><br><span class="line">        <span class="keyword">if</span> self.rect.top &lt;= <span class="number">0</span>:</span><br><span class="line">            self.rect.top = <span class="number">0</span></span><br><span class="line">        <span class="keyword">elif</span> self.rect.bottom &gt;= <span class="number">600</span>:</span><br><span class="line">            self.rect.bottom = <span class="number">600</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EnemySprite</span>(pygame.sprite.Sprite):</span><br><span class="line">    speed = choice([<span class="number">9</span>,<span class="number">27</span>,<span class="number">45</span>], [<span class="number">4.5</span>, <span class="number">3.6</span>, <span class="number">0.9</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.image = pygame.image.load(<span class="string">&#x27;/Users/august/Desktop/社团/pygame/enemy.jpeg&#x27;</span>).convert()</span><br><span class="line">        self.image.set_colorkey((<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>), RLEACCEL)</span><br><span class="line">        self.rect = self.image.get_rect(center=(<span class="number">820</span>, random.randint(<span class="number">0</span>, <span class="number">600</span>)))</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self</span>):</span><br><span class="line">        self.rect.move_ip(-self.speed, <span class="number">0</span>) </span><br><span class="line">        <span class="keyword">if</span> self.rect.right &lt; <span class="number">0</span>:</span><br><span class="line">            self.kill()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CloudSprite</span>(pygame.sprite.Sprite):</span><br><span class="line">    speed = choice([<span class="number">1</span>,<span class="number">2</span>], [<span class="number">0.8</span>, <span class="number">0.2</span>])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.image = pygame.image.load(<span class="string">&#x27;/Users/august/Desktop/社团/pygame/cloud.jpeg&#x27;</span>).convert()</span><br><span class="line">        self.image.set_colorkey((<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>),RLEACCEL)</span><br><span class="line">        self.rect = self.image.get_rect(</span><br><span class="line">            center = (random.randint(<span class="number">820</span>,<span class="number">900</span>),random.randint(<span class="number">0</span>,<span class="number">600</span>))</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self</span>):</span><br><span class="line">        self.rect.move_ip(-self.speed,<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">if</span> self.rect.right &lt; <span class="number">0</span>:</span><br><span class="line">            self.kill()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BackgroundSprite</span>(pygame.sprite.Sprite):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, size</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.image = pygame.Surface(size)  </span><br><span class="line">        self.image.fill((<span class="number">135</span>, <span class="number">206</span>, <span class="number">250</span>)) </span><br><span class="line">        self.rect = pygame.Rect(<span class="number">0</span>, <span class="number">0</span>, *size)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Game</span>():</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        </span><br><span class="line">        pygame.init()</span><br><span class="line"></span><br><span class="line">       </span><br><span class="line">        self.size = self.width, self.height = <span class="number">800</span>, <span class="number">600</span></span><br><span class="line">        self.screen = pygame.display.set_mode(self.size)</span><br><span class="line"></span><br><span class="line">        pygame.display.set_caption(<span class="string">&quot;Pygame 2D RPG !&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        self.ADDENEMY = pygame.USEREVENT + <span class="number">1</span>     </span><br><span class="line">        pygame.time.set_timer(self.ADDENEMY, <span class="number">300</span>) </span><br><span class="line">        self.ADDCLOUD = pygame.USEREVENT + <span class="number">2</span>        </span><br><span class="line">        pygame.time.set_timer(self.ADDCLOUD, <span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">        self.background = BackgroundSprite(self.size)</span><br><span class="line">        self.player = PlayerSprite()</span><br><span class="line"></span><br><span class="line">        self.enemies = pygame.sprite.Group()</span><br><span class="line">        self.clouds = pygame.sprite.Group()</span><br><span class="line">        self.all_sprites = pygame.sprite.Group()</span><br><span class="line">        </span><br><span class="line">        self.all_sprites.add(self.player)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>):</span><br><span class="line">        x_axis=<span class="number">0</span></span><br><span class="line">        y_axis=<span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="built_in">str</span> = ser.readline()</span><br><span class="line">            a=<span class="built_in">str</span>.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            <span class="built_in">list</span>=a.split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(<span class="built_in">list</span>)&gt;<span class="number">1</span>:</span><br><span class="line">                x_axis=((<span class="built_in">int</span>(<span class="built_in">list</span>[<span class="number">0</span>]))-<span class="number">512</span>)/<span class="number">80</span></span><br><span class="line">                y_axis=((<span class="built_in">int</span>(<span class="built_in">list</span>[<span class="number">1</span>]))-<span class="number">512</span>)/<span class="number">80</span></span><br><span class="line">             </span><br><span class="line">            <span class="keyword">for</span> event <span class="keyword">in</span> pygame.event.get():</span><br><span class="line">                <span class="keyword">if</span> event.<span class="built_in">type</span> == QUIT:</span><br><span class="line">                    pygame.quit()</span><br><span class="line">                    sys.exit()       </span><br><span class="line">                <span class="keyword">elif</span> event.<span class="built_in">type</span> == KEYDOWN:           </span><br><span class="line">                    <span class="keyword">if</span> event.key == K_ESCAPE:</span><br><span class="line">                        pygame.quit()</span><br><span class="line">                        sys.exit()                </span><br><span class="line">                <span class="keyword">elif</span> event.<span class="built_in">type</span> == self.ADDENEMY:</span><br><span class="line">                    new_enemy = EnemySprite()</span><br><span class="line">                    self.enemies.add(new_enemy)</span><br><span class="line">                    self.all_sprites.add(new_enemy)</span><br><span class="line">                <span class="keyword">elif</span> event.<span class="built_in">type</span> == self.ADDCLOUD: </span><br><span class="line">                    new_cloud = CloudSprite()</span><br><span class="line">                    self.clouds.add(new_cloud)</span><br><span class="line">                    self.all_sprites.add(new_cloud)</span><br><span class="line">          </span><br><span class="line">            self.screen.blit(self.background.image, self.background.rect)</span><br><span class="line">           </span><br><span class="line">            self.player.update(x_axis,y_axis)</span><br><span class="line">            self.enemies.update()</span><br><span class="line">            self.clouds.update()</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> sprite <span class="keyword">in</span> self.all_sprites:</span><br><span class="line">                self.screen.blit(sprite.image, sprite.rect)</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> pygame.sprite.spritecollideany(self.player, self.enemies):</span><br><span class="line">                self.player.kill()</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&#x27;collision!&#x27;</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">           </span><br><span class="line">            pygame.display.flip()</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    Game().run()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ser.close()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jingwengu0829.github.io/2021/12/14/2/" data-id="cln84bevu0005aocn4cxugn4c" data-title="project) serial communication - (rocking bar + serial communication + pygame)" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/09/28/1/" class="article-date">
-  <time class="dt-published" datetime="2023-09-28T18:30:15.000Z" itemprop="datePublished">2023-09-28</time>
+    <a href="/2021/12/14/1/" class="article-date">
+  <time class="dt-published" datetime="2021-12-15T07:06:30.000Z" itemprop="datePublished">2021-12-14</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/club-report/">club report</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -87,7 +584,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/09/28/1/">1</a>
+      <a class="p-name article-title" href="/2021/12/14/1/">project) general introduction to our project</a>
     </h1>
   
 
@@ -95,11 +592,31 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gwm2gqd5ipj31gf0u0abx.jpg" alt="IMG_2533"></p>
+<h2 id="2-do-list"><a href="#2-do-list" class="headerlink" title="2 do list"></a>2 do list</h2><ul>
+<li>Convert our gesture into python code</li>
+<li>use deep learning to enable our computer to understand our gesture</li>
+<li>transfer the data of our gesture to the small car and control its movement</li>
+</ul>
+<h2 id="what-is-deep-learning"><a href="#what-is-deep-learning" class="headerlink" title="what is deep learning?"></a>what is deep learning?</h2><ul>
+<li>artificial intelligence &amp;  machine learning &amp; deep learning</li>
+<li>artificial intelligence - human intelligence exhibited by machines</li>
+<li>machine learning - an approach to acheive artificial intelligence</li>
+<li>deep learning - a technique for implementing machine learning</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gwpgmig4nhj31420qwdm9.jpg" alt="截屏2021-11-23 下午10.19.20"></p>
+<ul>
+<li>deep learning is a type of learning algorithm which is more dependent on human intervention to learn</li>
+<li>based on nerual network</li>
+</ul>
+<h2 id="what-is-nerual-network"><a href="#what-is-nerual-network" class="headerlink" title="what is nerual network?"></a>what is nerual network?</h2><p>A neural network is <strong>a series of algorithms</strong> that endeavors to recognize <strong>underlying relationships</strong> in a set of data through a process that mimics the way the human brain operates. </p>
+<p>Neural networks can adapt to changing input; so the network generates the best possible result without needing to redesign the output criteria.</p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gwph22mp7bj30ic0fpaay.jpg" alt="dotdash_Final_Neural_Network_Apr_2020-01-5f4088dfda4c49d99a4d927c9a3a5ba0"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jingwengu0829.github.io/2023/09/28/1/" data-id="cln5b040h0000o4cnc2y60nxj" data-title="1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://jingwengu0829.github.io/2021/12/14/1/" data-id="cln84bevj0000aocnfedea3rp" data-title="project) general introduction to our project" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -111,12 +628,16 @@
 
 
   
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-more about arduino" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/09/28/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2023-09-28T18:12:07.924Z" itemprop="datePublished">2023-09-28</time>
+    <a href="/2021/12/14/more%20about%20arduino/" class="article-date">
+  <time class="dt-published" datetime="2021-12-15T07:05:18.000Z" itemprop="datePublished">2021-12-14</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/club-report/">club report</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -125,7 +646,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/09/28/hello-world/">Hello World</a>
+      <a class="p-name article-title" href="/2021/12/14/more%20about%20arduino/">more about arduino</a>
     </h1>
   
 
@@ -133,24 +654,31 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <ol>
+<li>ultrasonic distance measuring module</li>
+</ol>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gx5nuoxxm5j31iy0by0t8.jpg" alt="截屏2021-12-07 下午10.56.36"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;NewPing.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TRIGGER_PIN 12<span class="comment">//12端口</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ECHO_PIN 11<span class="comment">//11端口</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_DISTANCE 200<span class="comment">//最大距离是400-500cm，我们需要可以设定200cm</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function">NewPing <span class="title">sonar</span><span class="params">(TRIGGER_PIN,ECHO_PIN,MAX_DISTANCE)</span></span>;<span class="comment">//设置端口和最大距离</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span></span>&#123; </span><br><span class="line">  Serial.<span class="built_in">begin</span>(<span class="number">9600</span>); </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span></span>&#123; </span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">100</span>);<span class="comment">//间隔50ms扫描一次(大约20次/秒).29ms是扫描最短的时间间隔 </span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> uS=sonar.<span class="built_in">ping</span>();<span class="comment">//把扫描时间转化成us </span></span><br><span class="line">  <span class="type">int</span> dis=uS/US_ROUNDTRIP_CM;<span class="comment">//转成距离     </span></span><br><span class="line">  Serial.<span class="built_in">print</span>(<span class="string">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>); </span><br><span class="line">  Serial.<span class="built_in">print</span>(dis);</span><br><span class="line">  Serial.<span class="built_in">println</span>(<span class="string">&quot;cm&quot;</span>) </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>measuring module + beeper</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;NewPing.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TRIGGER_PIN 12<span class="comment">//12端口</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ECHO_PIN 11<span class="comment">//11端口</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_DISTANCE 200<span class="comment">//最大距离是400-500cm，我们需要可以设定200cm</span></span></span><br><span class="line"> </span><br><span class="line"><span class="function">NewPing <span class="title">sonar</span><span class="params">(TRIGGER_PIN,ECHO_PIN,MAX_DISTANCE)</span></span>;<span class="comment">//设置端口和最大距离</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span></span>&#123; </span><br><span class="line">  Serial.<span class="built_in">begin</span>(<span class="number">9600</span>); </span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">6</span>,OUTPUT);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span></span>&#123; </span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">100</span>);<span class="comment">//间隔50ms扫描一次(大约20次/秒).29ms是扫描最短的时间间隔 </span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> uS=sonar.<span class="built_in">ping</span>();<span class="comment">//把扫描时间转化成us </span></span><br><span class="line">  <span class="type">int</span> dis=uS/US_ROUNDTRIP_CM;<span class="comment">//转成距离     </span></span><br><span class="line">  Serial.<span class="built_in">print</span>(<span class="string">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>); </span><br><span class="line">  Serial.<span class="built_in">print</span>(dis);</span><br><span class="line">  Serial.<span class="built_in">println</span>(<span class="string">&quot;cm&quot;</span>) ;</span><br><span class="line">  <span class="keyword">if</span> (dis&lt;=<span class="number">30</span>)&#123;</span><br><span class="line">      <span class="built_in">digitalWrite</span>(<span class="number">6</span>,HIGH);</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">digitalWrite</span>(<span class="number">6</span>,LOW);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>with LCD</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Wire.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;LiquidCrystal_I2C.h&gt;</span> <span class="comment">//引用I2C库</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//设置LCD1602设备地址，这里的地址是0x3F，一般是0x20，或者0x27，具体看模块手册</span></span><br><span class="line"><span class="function">LiquidCrystal_I2C <span class="title">lcd</span><span class="params">(<span class="number">0x27</span>,<span class="number">16</span>,<span class="number">2</span>)</span></span>;  </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  lcd.<span class="built_in">init</span>();                  <span class="comment">// 初始化LCD</span></span><br><span class="line">  lcd.<span class="built_in">backlight</span>();             <span class="comment">//设置LCD背景等亮</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  lcd.<span class="built_in">setCursor</span>(<span class="number">0</span>,<span class="number">0</span>);                <span class="comment">//设置显示指针</span></span><br><span class="line">  lcd.<span class="built_in">print</span>(<span class="string">&quot;1&quot;</span>);     <span class="comment">//输出字符到LCD1602上</span></span><br><span class="line">  lcd.<span class="built_in">setCursor</span>(<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">  lcd.<span class="built_in">print</span>(<span class="string">&quot;2&quot;</span>);</span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;NewPing.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> TRIGGER_PIN 12<span class="comment">//12端口</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Wire.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;LiquidCrystal_I2C.h&gt;</span> <span class="comment">//引用I2C库</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//设置LCD1602设备地址，这里的地址是0x3F，一般是0x20，或者0x27，具体看模块手册</span></span><br><span class="line"><span class="function">LiquidCrystal_I2C <span class="title">lcd</span><span class="params">(<span class="number">0x27</span>,<span class="number">16</span>,<span class="number">2</span>)</span></span>;  </span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ECHO_PIN 11<span class="comment">//11端口</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_DISTANCE 200<span class="comment">//最大距离是400-500cm，我们需要可以设定200cm</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">NewPing <span class="title">sonar</span><span class="params">(TRIGGER_PIN,ECHO_PIN,MAX_DISTANCE)</span></span>;<span class="comment">//设置端口和最大距离</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span></span>&#123; </span><br><span class="line">  Serial.<span class="built_in">begin</span>(<span class="number">9600</span>); </span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">6</span>,OUTPUT);</span><br><span class="line">  lcd.<span class="built_in">init</span>();                  <span class="comment">// 初始化LCD</span></span><br><span class="line">  lcd.<span class="built_in">backlight</span>();  </span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span></span>&#123; </span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">100</span>);<span class="comment">//间隔50ms扫描一次(大约20次/秒).29ms是扫描最短的时间间隔 </span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> uS=sonar.<span class="built_in">ping</span>();<span class="comment">//把扫描时间转化成us </span></span><br><span class="line">  <span class="type">int</span> dis=uS/US_ROUNDTRIP_CM;<span class="comment">//转成距离     </span></span><br><span class="line">  Serial.<span class="built_in">print</span>(<span class="string">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>); </span><br><span class="line">  Serial.<span class="built_in">print</span>(dis);</span><br><span class="line">  Serial.<span class="built_in">println</span>(<span class="string">&quot;cm&quot;</span>) ;</span><br><span class="line">  <span class="keyword">if</span> (dis&lt;=<span class="number">30</span>)&#123;</span><br><span class="line">      <span class="built_in">digitalWrite</span>(<span class="number">6</span>,LOW);</span><br><span class="line">      lcd.<span class="built_in">setCursor</span>(<span class="number">0</span>,<span class="number">0</span>);                <span class="comment">//设置显示指针</span></span><br><span class="line">      String t = <span class="string">&quot;Warning&quot;</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;t.<span class="built_in">length</span>();i++)&#123;  <span class="comment">//此处为处理关键地方</span></span><br><span class="line">      lcd.<span class="built_in">write</span>(t.<span class="built_in">charAt</span>(i));</span><br><span class="line">      &#125;<span class="comment">//此处为处理关键地方 </span></span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">digitalWrite</span>(<span class="number">6</span>,HIGH);</span><br><span class="line">      lcd.<span class="built_in">setCursor</span>(<span class="number">0</span>,<span class="number">0</span>);                <span class="comment">//设置显示指针</span></span><br><span class="line">      String f = <span class="string">&quot;Save   &quot;</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;f.<span class="built_in">length</span>();i++)&#123;  <span class="comment">//此处为处理关键地方</span></span><br><span class="line">      lcd.<span class="built_in">write</span>(f.<span class="built_in">charAt</span>(i));    </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jingwengu0829.github.io/2023/09/28/hello-world/" data-id="cln5b040n0001o4cn7rg2cm16" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://jingwengu0829.github.io/2021/12/14/more%20about%20arduino/" data-id="cln84bevy000gaocn44o65hjc" data-title="more about arduino" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -163,12 +691,24 @@
 
   
 
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coursera-books/">Coursera & books</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/academic-reports/">academic reports</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/club-report/">club report</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python-notes/">python notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/research/">research</a></li></ul>
+    </div>
+  </div>
+
 
   
     
@@ -180,7 +720,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li></ul>
     </div>
   </div>
 
@@ -193,11 +733,23 @@
       <ul>
         
           <li>
-            <a href="/2023/09/28/1/">1</a>
+            <a href="/2022/03/07/machine%20learning/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2023/09/28/hello-world/">Hello World</a>
+            <a href="/2022/02/01/h.264%20notes/">Principle of H.264 encoding</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/kaggle%20skills/">4. useful functions in Kaggle</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/16/deep%20learning/">deep learning and neural network</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/19/himcm/">report of HIMCM</a>
           </li>
         
       </ul>
