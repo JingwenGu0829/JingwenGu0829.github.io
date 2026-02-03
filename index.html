@@ -10,7 +10,6 @@
   <header class="nav">
     <div class="nav-inner">
       <a class="brand" href="/">
-        <span class="logo" aria-hidden="true"></span>
         <span>Jingwen Gu</span>
       </a>
       <nav class="nav-links" aria-label="primary">
@@ -25,40 +24,51 @@
   </header>
 
   <main class="container">
-    <section class="hero">
-      <div>
-        <h1 class="h-title fade-in">Build more efficient AI&amp;Finance systems<br/>by system-algorithm codesigns</h1>
-        <p class="h-sub fade-in d2">UCSD Math Computer Science and Data Science</p>
-
-        <div class="grid fade-in d3">
-          <div class="tile">
-            <h3>Projects</h3>
-            <p>Dummy cards now, real work soon. Clean writeups, metrics, links.</p>
-          </div>
-          <div class="tile">
-            <h3>Research</h3>
-            <p>Short summaries + PDFs + notes. Build a personal lab notebook.</p>
-          </div>
-          <div class="tile">
-            <h3>Blog</h3>
-            <p>Low-friction posts: ideas, learnings, experiments, reading notes.</p>
-          </div>
+    <section class="hero-new">
+      <div class="hero-text fade-in">
+        <h1 class="h-title">Engineering efficient systems<br/>by system-algorithm codesigns</h1>
+        <p class="h-sub">UCSD Math Computer Science and Data Science</p>
+      </div>
+      <div class="hero-photo fade-in d2">
+        <div class="photo-placeholder">
+          <span>Photo</span>
         </div>
       </div>
+    </section>
 
-      <aside class="card pad fade-in d2">
-        <div class="kv">
-          <div class="item"><div class="k">Focus</div><div class="v">RLHF / RL theory, serving infra</div></div>
-          <div class="item"><div class="k">Based in</div><div class="v">San Diego, CA</div></div>
-          <div class="item"><div class="k">GitHub</div><div class="v"><a href="https://github.com/JingwenGu0829">@JingwenGu0829</a></div></div>
-          <div class="item"><div class="k">Links</div><div class="v">(add LinkedIn / Email)</div></div>
-        </div>
-      </aside>
+    <section class="expertise-section fade-in d3">
+      <div class="expertise-cards">
+        <a href="/projects/system/" class="expertise-card system-card">
+          <div class="card-icon">⚙️</div>
+          <div class="card-content">
+            <h2>System</h2>
+            <p class="card-tagline">Infrastructure & Engineering</p>
+            <div class="card-details">
+              <p>Building high-performance serving infrastructure, distributed systems, and ML pipelines. Optimizing for latency, throughput, and scalability.</p>
+              <span class="card-cta">View Projects →</span>
+            </div>
+          </div>
+          <div class="card-glow"></div>
+        </a>
+
+        <a href="/projects/theory/" class="expertise-card theory-card">
+          <div class="card-icon">∑</div>
+          <div class="card-content">
+            <h2>Theory</h2>
+            <p class="card-tagline">Algorithms & Mathematics</p>
+            <div class="card-details">
+              <p>Reinforcement learning theory, algorithm design, convergence analysis, and mathematical foundations of machine learning.</p>
+              <span class="card-cta">View Research →</span>
+            </div>
+          </div>
+          <div class="card-glow"></div>
+        </a>
+      </div>
     </section>
 
     <footer class="footer">
-      <div>© <span id="y"></span> Jingwen Gu <span class="sep">·</span> built with static HTML/CSS</div>
-      <div><a href="/resume/">Resume</a> <span class="sep">·</span> <a href="/projects/">Projects</a></div>
+      <div>© <span id="y"></span> Jingwen Gu</div>
+      <div><a href="https://github.com/JingwenGu0829">GitHub</a> <span class="sep">·</span> <a href="/resume/">Resume</a></div>
     </footer>
   </main>
 
