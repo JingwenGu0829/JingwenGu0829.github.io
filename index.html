@@ -6,7 +6,7 @@
   <title>Jingwen Gu</title>
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
-<body>
+<body class="snap-scroll">
   <header class="nav">
     <div class="nav-inner">
       <a class="brand" href="/">
@@ -23,56 +23,77 @@
     </div>
   </header>
 
-  <main class="container">
-    <section class="hero-new">
-      <div class="hero-text fade-in">
-        <h1 class="h-title">Engineering efficient systems<br/>by system-algorithm codesigns</h1>
-        <p class="h-sub">UCSD Math Computer Science and Data Science</p>
-      </div>
-      <div class="hero-photo fade-in d2">
-        <div class="photo-placeholder">
-          <span>Photo</span>
-        </div>
+  <main class="snap-container">
+    <!-- PAGE 1: Hero + Terminal Intro -->
+    <section class="snap-page page-one">
+      <div class="container">
+        <section class="hero-new">
+          <div class="hero-text fade-in">
+            <h1 class="h-title">Engineering the <span class="highlight">efficiency</span><br/>by system-algorithm codesigns</h1>
+            <p class="h-sub">UCSD  B.S Math-Computer Science and Data Science</p>
+          </div>
+          <div class="hero-photo fade-in d2">
+            <img src="/src/avatar.jpg" alt="Jingwen Gu" class="profile-photo" />
+          </div>
+        </section>
+
+        <section class="terminal-section fade-in d3">
+          <div class="terminal-window">
+            <div class="terminal-header">
+              <span class="terminal-dot red"></span>
+              <span class="terminal-dot yellow"></span>
+              <span class="terminal-dot green"></span>
+              <span class="terminal-title">jing@123 ~ </span>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-line">
+                <span class="prompt">$</span> <span class="cmd">cat about.txt</span>
+              </div>
+              <div class="terminal-output">
+                <p>Hi, I'm <span class="term-highlight">Jingwen Gu</span>, 
+                  I guess you can call me Jing! I'm a fan of 🧗‍♂️bouldering, 🏋️‍♂️workouts, 🎮Overwatch and 🚗cars. 
+                  I also love math and coding which helps me understand and build something cool!  <br>
+                  My current research interest lies in <span class="term-highlight">Inference Infrastructure in Reinforcement Learning systems</span> and designs of  <span class="term-highlight">Agentic Runtime Infra</span>, something like the future of OpenClaw🦀. <br>
+                  My previous research and project experiences span areas including RLVR mechanims, agentic long horizon reasoning, and RLHF theory. <br>
+                  If you think we can do something crazy together, reach out to me via the links below <span class="term-highlight">echo $CONTACT</span>!
+                </p>
+              </div>
+              <div class="terminal-line">
+                <span class="prompt">$</span> <span class="cmd">ls ./navigation/</span>
+              </div>
+              <div class="terminal-output">
+                <p class="term-files">
+                  <a href="/projects/">projects/</a>
+                  <a href="/research/">research/</a>
+                  <a href="/resume/">resume.pdf</a>
+                  <a href="/blog/">blog/</a>
+                </p>
+              </div>
+              <div class="terminal-line">
+                <span class="prompt">$</span> <span class="cmd">echo $CONTACT</span>
+              </div>
+              <div class="terminal-output">
+                <p class="term-links">
+                  <a href="https://github.com/JingwenGu0829">github.com/JingwenGu0829</a>
+                  <a href="https://www.linkedin.com/in/jingwen-gu-606442304/">linkedin.com/in/jingwen-gu</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <p class="selector-hint">scroll for more ↓</p>
+        </section>
       </div>
     </section>
 
-    <section class="selector-section fade-in d3">
-      <div class="selector-container">
-        <a href="/projects/system/" class="selector-panel system-panel">
-          <div class="panel-bg"></div>
-          <div class="panel-content">
-            <div class="panel-icon">⚙️</div>
-            <h2 class="panel-title">System</h2>
-            <p class="panel-tagline">Infrastructure & Engineering</p>
-            <div class="panel-details">
-              <p>High-performance serving infrastructure, distributed systems, ML pipelines. Optimizing for latency, throughput, and scale.</p>
-              <span class="panel-cta">Explore →</span>
-            </div>
-          </div>
-        </a>
-
-        <a href="/projects/theory/" class="selector-panel theory-panel">
-          <div class="panel-bg"></div>
-          <div class="panel-content">
-            <div class="panel-icon">∑</div>
-            <h2 class="panel-title">Theory <span class="title-sub">&Empirics</span></h2>
-            <p class="panel-tagline">Algorithms & Mathematics</p>
-            <div class="panel-details">
-              <p>Reinforcement learning theory, algorithm design, convergence analysis, and mathematical foundations of ML.</p>
-              <span class="panel-cta">Explore →</span>
-            </div>
-          </div>
-        </a>
+    <!-- PAGE 2: To Be Done -->
+    <section class="snap-page page-two">
+      <div class="tbd-container">
+        <p class="tbd-text">more coming soon...</p>
+        <p class="scroll-hint">↑ scroll up to return</p>
       </div>
     </section>
-
-    <footer class="footer">
-      <div>© <span id="y"></span> Jingwen Gu</div>
-      <div><a href="https://github.com/JingwenGu0829">GitHub</a> <span class="sep">·</span> <a href="/resume/">Resume</a></div>
-    </footer>
   </main>
 
-  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
   <script src="/assets/js/main.js"></script>
 </body>
 </html>

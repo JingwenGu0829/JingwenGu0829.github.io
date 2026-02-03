@@ -24,6 +24,186 @@ a{color:var(--fg); text-decoration:none}
 a:hover{opacity:.85}
 .container{max-width:1050px; margin:0 auto; padding:28px 18px 80px}
 
+/* ============================================
+   Scroll Snap Pages
+   ============================================ */
+.snap-scroll{
+  overflow:hidden;
+}
+.snap-container{
+  height:calc(100vh - 53px);
+  overflow-y:scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior:smooth;
+}
+.snap-page{
+  min-height:calc(100vh - 53px);
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.page-one{
+  padding-top:10px;
+  align-items:flex-start;
+}
+.page-one .container{
+  padding:20px 18px 30px;
+}
+
+/* Hint text above selector */
+.selector-hint{
+  font-size:13px;
+  color:var(--muted);
+  opacity:0.6;
+  margin-bottom:12px;
+  letter-spacing:0.3px;
+}
+
+/* ============================================
+   Terminal Style (Page 2)
+   ============================================ */
+.terminal-container{
+  width:100%;
+  max-width:800px;
+  padding:20px;
+}
+
+.terminal-window{
+  border-radius:12px;
+  overflow:hidden;
+  background:#0d0d0d;
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow: 0 25px 80px rgba(0,0,0,.6);
+}
+
+.terminal-header{
+  background:#1a1a1a;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.terminal-dot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+}
+.terminal-dot.red{background:#ff5f57}
+.terminal-dot.yellow{background:#febc2e}
+.terminal-dot.green{background:#28c840}
+
+.terminal-title{
+  margin-left:12px;
+  font-size:13px;
+  color:var(--muted);
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+.terminal-body{
+  padding:16px 20px 20px;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.terminal-line{
+  margin-bottom:4px;
+}
+
+.prompt{
+  color:#28c840;
+  margin-right:8px;
+}
+
+.cmd{
+  color:#60a5fa;
+}
+
+.terminal-output{
+  margin:6px 0 14px 0;
+  padding-left:16px;
+  color:var(--muted);
+}
+
+.terminal-output p{
+  margin:0 0 5px;
+}
+
+.term-highlight{
+  color:var(--fg);
+  font-weight:500;
+}
+
+.term-files{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.term-files a{
+  color:#60a5fa;
+}
+.term-files a:hover{
+  text-decoration:underline;
+  opacity:1;
+}
+
+.term-links{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.term-links a{
+  color:#a78bfa;
+}
+.term-links a:hover{
+  text-decoration:underline;
+  opacity:1;
+}
+
+.cursor{
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink{
+  0%, 100%{ opacity:1; }
+  50%{ opacity:0; }
+}
+
+.scroll-hint{
+  text-align:center;
+  margin-top:24px;
+  font-size:13px;
+  color:var(--muted);
+  opacity:0.5;
+}
+
+/* Terminal section on page 1 */
+.terminal-section{
+  margin-top:24px;
+}
+.terminal-section .terminal-window{
+  max-width:100%;
+}
+.terminal-section .selector-hint{
+  margin-top:12px;
+  margin-bottom:0;
+  text-align:center;
+}
+
+/* TBD page */
+.tbd-container{
+  text-align:center;
+}
+.tbd-text{
+  font-size:20px;
+  color:var(--muted);
+  opacity:0.6;
+  margin:0;
+}
+
 /* Navigation */
 .nav{
   position:sticky; top:0; z-index:50;
@@ -45,10 +225,10 @@ a:hover{opacity:.85}
 
 /* Hero Section - New Design */
 .hero-new{
-  padding:60px 0 40px;
+  padding:30px 0 20px;
   display:grid;
   grid-template-columns: 1fr auto;
-  gap:40px;
+  gap:30px;
   align-items:center;
 }
 @media (max-width: 768px){
@@ -59,31 +239,37 @@ a:hover{opacity:.85}
 .h-title{font-size:42px; line-height:1.1; margin:0 0 16px; letter-spacing:-.02em; font-weight:700}
 .h-sub{margin:0; color:var(--muted); font-size:17px}
 
+/* Highlight effect for "efficiency" */
+.highlight{
+  position:relative;
+  color:var(--fg);
+  background: linear-gradient(90deg, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .hero-photo{
   flex-shrink:0;
 }
-.photo-placeholder{
-  width:180px;
-  height:180px;
-  border-radius:50%;
+.profile-photo{
+  width:220px;
+  height:220px;
+  object-fit:cover;
+  border-radius:16px;
   border:2px solid var(--border);
-  background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--muted);
-  font-size:14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.4);
 }
 @media (max-width: 768px){
   .hero-photo{margin:0 auto}
-  .photo-placeholder{width:140px; height:140px}
+  .profile-photo{width:150px; height:150px}
 }
 
 /* ============================================
    "It Takes Two" Style Selector
    ============================================ */
 .selector-section{
-  margin-top:50px;
+  margin-top:40px;
 }
 
 .selector-container{
@@ -93,6 +279,12 @@ a:hover{opacity:.85}
   overflow:hidden;
   border:1px solid var(--border);
   background: rgba(0,0,0,.2);
+  /* Entry animation - subtle scale pop on load */
+  animation: container-enter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+@keyframes container-enter{
+  0%{ transform: scale(0.92); opacity:0; }
+  100%{ transform: scale(1); opacity:1; }
 }
 
 .selector-panel{
@@ -112,20 +304,25 @@ a:hover{opacity:.85}
   border-right:1px solid var(--border);
 }
 
-/* Background layers for each panel */
+/* Background glow layers - subtle idle pulse */
 .panel-bg{
   position:absolute;
   inset:0;
-  opacity:0;
+  opacity:0.06;
   transition: opacity 0.5s ease;
+  animation: glow-breathe 4s ease-in-out infinite;
+}
+@keyframes glow-breathe{
+  0%, 100%{ opacity:0.05; }
+  50%{ opacity:0.18; }
 }
 
 .system-panel .panel-bg{
-  background: radial-gradient(ellipse at 30% 50%, var(--system-glow), transparent 70%);
+  background: radial-gradient(ellipse at 50% 50%, var(--system-glow), transparent 70%);
 }
 
 .theory-panel .panel-bg{
-  background: radial-gradient(ellipse at 70% 50%, var(--theory-glow), transparent 70%);
+  background: radial-gradient(ellipse at 50% 50%, var(--theory-glow), transparent 70%);
 }
 
 /* Hover: expand hovered panel to 80%, shrink sibling to 20% */
@@ -136,7 +333,8 @@ a:hover{opacity:.85}
   flex:1;
 }
 .selector-panel:hover .panel-bg{
-  opacity:0.25;
+  opacity:0.28;
+  animation:none;
 }
 
 /* Panel content */
@@ -145,21 +343,27 @@ a:hover{opacity:.85}
   z-index:2;
   text-align:center;
   padding:24px;
-  transition: all 0.4s ease;
 }
 
+/* Icon with slow breathing scale */
 .panel-icon{
   font-size:40px;
-  margin-bottom:12px;
+  margin-bottom:8px;
   transition: transform 0.4s ease;
+  animation: icon-breathe 3.5s ease-in-out infinite;
+}
+@keyframes icon-breathe{
+  0%, 100%{ transform: scale(1); }
+  50%{ transform: scale(1.08); }
 }
 
 .selector-panel:hover .panel-icon{
-  transform:scale(1.15);
+  transform:scale(1.12);
+  animation:none;
 }
 
 .panel-title{
-  margin:0 0 6px;
+  margin:0;
   font-size:28px;
   font-weight:700;
   letter-spacing:-0.02em;
@@ -173,55 +377,24 @@ a:hover{opacity:.85}
   opacity:0.7;
 }
 
-.panel-tagline{
-  margin:0;
-  font-size:14px;
-  color:var(--muted);
-  transition: opacity 0.3s ease;
-}
-
-/* Details only show when hovered */
-.panel-details{
-  max-height:0;
-  opacity:0;
-  overflow:hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.panel-details p{
-  margin:14px 0 12px;
-  font-size:14px;
-  color:var(--muted);
-  line-height:1.5;
-  max-width:320px;
-}
-
 .panel-cta{
   display:inline-block;
+  margin-top:16px;
   padding:10px 20px;
   background:rgba(255,255,255,.1);
   border-radius:10px;
   font-size:14px;
   font-weight:500;
   color:var(--fg);
-  transition: all 0.3s ease;
+  opacity:0;
+  transform:translateY(8px);
+  transition: all 0.4s ease;
 }
 
 .selector-panel:hover .panel-cta{
-  background:rgba(255,255,255,.18);
-}
-
-.selector-panel:hover .panel-details{
-  max-height:200px;
   opacity:1;
-}
-
-/* When not hovered, hide tagline for contracted panel */
-.selector-container:hover .selector-panel:not(:hover) .panel-tagline{
-  opacity:0;
-}
-.selector-container:hover .selector-panel:not(:hover) .panel-title{
-  font-size:22px;
+  transform:translateY(0);
+  background:rgba(255,255,255,.15);
 }
 
 /* Mobile: stack vertically */
@@ -237,10 +410,6 @@ a:hover{opacity:.85}
   .system-panel{
     border-right:none;
     border-bottom:1px solid var(--border);
-  }
-  .panel-details{
-    max-height:150px;
-    opacity:1;
   }
 }
 

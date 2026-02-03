@@ -5,6 +5,37 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Resume — Jingwen Gu</title>
   <link rel="stylesheet" href="/assets/css/style.css" />
+  <style>
+    .pdf-container{
+      width:100%;
+      height:85vh;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.2);
+    }
+    .pdf-container iframe{
+      width:100%;
+      height:100%;
+      border:none;
+    }
+    .download-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 18px;
+      background:rgba(255,255,255,.08);
+      border-radius:10px;
+      font-size:14px;
+      color:var(--fg);
+      transition: background 0.2s;
+      margin-top:16px;
+    }
+    .download-link:hover{
+      background:rgba(255,255,255,.15);
+      opacity:1;
+    }
+  </style>
 </head>
 <body>
   <header class="nav">
@@ -16,7 +47,7 @@
         <a class="chip" href="/">Home</a>
         <a class="chip" href="/projects/">Projects</a>
         <a class="chip" href="/research/">Research</a>
-        <a class="chip" href="/resume/">Resume</a>
+        <a class="chip active" href="/resume/">Resume</a>
         <a class="chip" href="/blog/">Blog</a>
         <a class="chip" href="/more/">More</a>
       </nav>
@@ -25,19 +56,19 @@
 
   <main class="container">
     <h1 class="small-title fade-in">Resume</h1>
-    <p class="lead fade-in d2">A clean online resume. We can mirror your PDF and add a quick-scan HTML version.</p>
+    <p class="lead fade-in d2">View or download my resume below.</p>
 
-    <section class="card pad fade-in d3">
-      <div class="list">
-        <div class="row"><b>Placeholder</b> — this page is scaffolded and ready for real content.</div>
-        <div class="row"><b>Links</b> — add GitHub/LinkedIn/etc when ready.</div>
-        <div class="row"><b>Notes</b> — we can evolve this layout anytime.</div>
-      </div>
-    </section>
+    <div class="pdf-container fade-in d3">
+      <iframe src="/src/Jingwen_Resume.pdf" title="Jingwen Gu Resume"></iframe>
+    </div>
+
+    <a href="/src/Jingwen_Resume.pdf" download class="download-link fade-in d3">
+      ↓ Download PDF
+    </a>
 
     <footer class="footer">
-      <div>© <span id="y"></span> Jingwen Gu <span class="sep">·</span> UCSD DS + Math-CS</div>
-      <div><a href="https://github.com/JingwenGu0829">GitHub</a> <span class="sep">·</span> <a href="#">LinkedIn</a></div>
+      <div>© <span id="y"></span> Jingwen Gu</div>
+      <div><a href="https://github.com/JingwenGu0829">GitHub</a> <span class="sep">·</span> <a href="https://www.linkedin.com/in/jingwen-gu-606442304/">LinkedIn</a></div>
     </footer>
   </main>
 
