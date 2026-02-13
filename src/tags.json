@@ -1,0 +1,24 @@
+{
+  "tags": {
+    "RL theory": {
+      "color": "#a78bfa",
+      "bg": "rgba(167, 139, 250, 0.15)"
+    },
+    "Leadership": {
+      "color": "#f59e0b",
+      "bg": "rgba(245, 158, 11, 0.15)"
+    },
+    "Quantitative Research": {
+      "color": "#10b981",
+      "bg": "rgba(16, 185, 129, 0.15)"
+    },
+    "Runtime Infra": {
+      "color": "#3b82f6",
+      "bg": "rgba(59, 130, 246, 0.15)"
+    },
+    "Application": {
+      "color": "#ec4899",
+      "bg": "rgba(236, 72, 153, 0.15)"
+    }
+  }
+}

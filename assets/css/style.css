@@ -507,13 +507,6 @@ a:hover{opacity:.85}
   margin-bottom:10px;
   flex-wrap:wrap;
 }
-.project-item .tag{
-  padding:4px 10px;
-  background: rgba(255,255,255,.06);
-  border-radius:6px;
-  font-size:12px;
-  color:var(--muted);
-}
 .project-item p{
   margin:0;
   color:var(--muted);
@@ -564,14 +557,7 @@ a:hover{opacity:.85}
   color:var(--muted);
   font-size:14px;
   font-style:italic;
-  margin:0 0 12px;
-}
-.research-abstract{
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.7;
-  margin:0 0 12px;
-  text-align:justify;
+  margin:0 0 10px;
 }
 .research-links{
   margin-top:12px;
@@ -586,6 +572,52 @@ a:hover{opacity:.85}
 .research-links a:hover{
   color:var(--fg);
   opacity:1;
+}
+
+/* Tag System */
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:10px 0;
+}
+.tag{
+  padding:5px 12px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:500;
+  border:1px solid;
+  transition: transform 0.2s ease;
+}
+.tag:hover{
+  transform: translateY(-1px);
+}
+
+/* Tag Colors - matching tags.json */
+.tag-rl-theory{
+  color:#a78bfa;
+  background:rgba(167, 139, 250, 0.15);
+  border-color:rgba(167, 139, 250, 0.3);
+}
+.tag-leadership{
+  color:#f59e0b;
+  background:rgba(245, 158, 11, 0.15);
+  border-color:rgba(245, 158, 11, 0.3);
+}
+.tag-quant{
+  color:#10b981;
+  background:rgba(16, 185, 129, 0.15);
+  border-color:rgba(16, 185, 129, 0.3);
+}
+.tag-runtime{
+  color:#3b82f6;
+  background:rgba(59, 130, 246, 0.15);
+  border-color:rgba(59, 130, 246, 0.3);
+}
+.tag-app{
+  color:#ec4899;
+  background:rgba(236, 72, 153, 0.15);
+  border-color:rgba(236, 72, 153, 0.3);
 }
 
 /* Project Image Styles */
