@@ -28,10 +28,15 @@
     <p class="lead fade-in d2">Notes and summaries from research work (and a future home for papers, experiments, and derivations).</p>
 
     <section class="card pad fade-in d3">
-      <div class="list">
-        <div class="row"><b>Placeholder</b> — this page is scaffolded and ready for real content.</div>
-        <div class="row"><b>Links</b> — add GitHub/LinkedIn/etc when ready.</div>
-        <div class="row"><b>Notes</b> — we can evolve this layout anytime.</div>
+      <div class="research-item">
+        <h3>Ladder-BAI: Beating Preference Saturation with Warm-Started Best-Arm Identification</h3>
+        <p class="research-meta">Undergraduate Math-Computer Science Honors Thesis</p>
+        <p class="research-abstract">
+          In preference-based reinforcement learning, the Bradley–Terry model maps reward differences through a logistic link, causing the Fisher information of each comparison to decay as e<sup>-|Δ|</sup> when the learner is compared against a fixed, weak reference. This preference saturation effect can make sample complexity scale exponentially in the reward range R<sub>max</sub>. We study this problem in the K-armed dueling bandit setting and propose Ladder-BAI, an algorithm that periodically promotes the baseline arm to the current empirical best, keeping all comparisons in the informative regime of the sigmoid. Our main result shows that Ladder-BAI identifies an ε-optimal arm with probability 1-δ using Õ(KR<sub>max</sub> + K/ε²) preference queries—linear in R<sub>max</sub>, an exponential improvement over fixed-baseline methods and a polynomial improvement over the O(R<sub>max</sub><sup>5/2</sup>) bound known for general function approximation. The proof relies on a reward-ladder argument: each epoch yields a constant reward gain via Hoeffding concentration and logistic link inversion, so O(R<sub>max</sub>) epochs suffice to reach the local regime where standard best-arm identification applies. Experiments on synthetic Bradley–Terry bandits confirm the predicted linear scaling in R<sub>max</sub> and K.
+        </p>
+        <div class="research-links">
+          <a href="/src/Math_Honors_Thesis.pdf" target="_blank">View PDF →</a>
+        </div>
       </div>
     </section>
 
