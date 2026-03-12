@@ -4,47 +4,69 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Research — Jingwen Gu</title>
-  <link rel="stylesheet" href="/assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=4" />
 </head>
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/">
-        <span>Jingwen Gu</span>
-      </a>
+      <a class="brand" href="/">Jingwen Gu</a>
       <nav class="nav-links" aria-label="primary">
-        <a class="chip" href="/">Home</a>
-        <a class="chip" href="/projects/">Projects</a>
-        <a class="chip" href="/research/">Research</a>
-        <a class="chip" href="/resume/">Resume</a>
-        <a class="chip" href="/blog/">Blog</a>
-        <a class="chip" href="/more/">More</a>
+        <a href="/">Home</a>
+        <a href="/projects/">Projects</a>
+        <a href="/research/">Research</a>
+        <a href="/resume/">Resume</a>
+        <a href="/blog/">Blog</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <h1 class="small-title fade-in">Research</h1>
-    <p class="lead fade-in d2">Notes and summaries from research work (and a future home for papers, experiments, and derivations).</p>
+  <div class="page-wrap">
+    <aside class="sidebar">
+      <img src="/src/avatar.jpg" alt="Jingwen Gu" class="profile-photo" />
+      <div class="name">Jingwen Gu</div>
+      <div class="title">Undergraduate Student</div>
+      <div class="affiliation">UC San Diego</div>
+      <ul class="sidebar-links">
+        <li>
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:jig040@ucsd.edu">jig040@ucsd.edu</a>
+        </li>
+        <li>
+          <i class="fab fa-github"></i>
+          <a href="https://github.com/JingwenGu0829" target="_blank">GitHub</a>
+        </li>
+        <li>
+          <i class="fab fa-linkedin"></i>
+          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/" target="_blank">LinkedIn</a>
+        </li>
+      </ul>
+    </aside>
 
-    <section class="card pad fade-in d3">
-      <div class="research-item">
+    <main class="main-content">
+      <h1>Research</h1>
+
+      <div class="pub-item">
         <h3>Ladder-BAI: Beating Preference Saturation with Warm-Started Best-Arm Identification</h3>
-        <p class="research-meta">Undergraduate Math-Computer Science Honors Thesis</p>
+        <div class="pub-meta">Undergraduate Math-Computer Science Honors Thesis</div>
         <div class="tags">
-          <span class="tag tag-rl-theory">RL theory</span>
+          <span class="tag tag-rl-theory">RL Theory</span>
         </div>
-        <div class="research-links">
-          <a href="/src/Math_Honors_Thesis.pdf" target="_blank">View PDF →</a>
+        <div class="pub-links">
+          <a href="/src/Math_Honors_Thesis.pdf" target="_blank"><i class="fas fa-file-pdf"></i> PDF</a>
         </div>
       </div>
-    </section>
 
-    <footer class="footer">
-      <div>© <span id="y"></span> Jingwen Gu <span class="sep">·</span> UCSD DS + Math-CS</div>
-      <div><a href="https://github.com/JingwenGu0829">GitHub</a> <span class="sep">·</span> <a href="#">LinkedIn</a></div>
-    </footer>
-  </main>
+      <footer class="footer">
+        <div>&copy; <span id="y"></span> Jingwen Gu</div>
+        <div>
+          <a href="https://github.com/JingwenGu0829">GitHub</a> &middot;
+          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/">LinkedIn</a>
+        </div>
+      </footer>
+    </main>
+  </div>
 
   <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
   <script src="/assets/js/main.js"></script>

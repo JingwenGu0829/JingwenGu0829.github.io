@@ -4,64 +4,87 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Projects — Jingwen Gu</title>
-  <link rel="stylesheet" href="/assets/css/style.css?v=3" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=4" />
 </head>
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/">
-        <span>Jingwen Gu</span>
-      </a>
+      <a class="brand" href="/">Jingwen Gu</a>
       <nav class="nav-links" aria-label="primary">
-        <a class="chip" href="/">Home</a>
-        <a class="chip" href="/projects/">Projects</a>
-        <a class="chip" href="/research/">Research</a>
-        <a class="chip" href="/resume/">Resume</a>
-        <a class="chip" href="/blog/">Blog</a>
-        <a class="chip" href="/more/">More</a>
+        <a href="/">Home</a>
+        <a href="/projects/">Projects</a>
+        <a href="/research/">Research</a>
+        <a href="/resume/">Resume</a>
+        <a href="/blog/">Blog</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <h1 class="small-title fade-in">Projects</h1>
-    <p class="lead fade-in d2">A place for detailed writeups: problem, approach, results, what you learned, and links.</p>
+  <div class="page-wrap">
+    <aside class="sidebar">
+      <img src="/src/avatar.jpg" alt="Jingwen Gu" class="profile-photo" />
+      <div class="name">Jingwen Gu</div>
+      <div class="title">Undergraduate Student</div>
+      <div class="affiliation">UC San Diego</div>
+      <ul class="sidebar-links">
+        <li>
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:jig040@ucsd.edu">jig040@ucsd.edu</a>
+        </li>
+        <li>
+          <i class="fab fa-github"></i>
+          <a href="https://github.com/JingwenGu0829" target="_blank">GitHub</a>
+        </li>
+        <li>
+          <i class="fab fa-linkedin"></i>
+          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/" target="_blank">LinkedIn</a>
+        </li>
+      </ul>
+    </aside>
 
-    <div class="project-list">
-      <section class="project-item fade-in d3">
-        <h3>Cofounder and Vice President of UCSD Student Foundation Investment Committee</h3>
+    <main class="main-content">
+      <h1>Projects</h1>
+
+      <div class="project-item">
+        <h3>UCSD Student Foundation Investment Committee</h3>
         <div class="tags">
           <span class="tag tag-leadership">Leadership</span>
           <span class="tag tag-quant">Quantitative Research</span>
         </div>
+        <p>Cofounder and Vice President.</p>
         <div class="project-links">
-          <a href="https://ucsd-sfic.github.io/website/" target="_blank">Visit Website →</a>
+          <a href="https://ucsd-sfic.github.io/website/" target="_blank">Website &rarr;</a>
         </div>
-      </section>
+      </div>
 
-      <section class="project-item fade-in d3">
+      <div class="project-item">
         <h3>MoltFocus</h3>
-        <div class="project-image">
-          <img src="/src/poster.png" alt="MoltFocus Poster" />
-        </div>
         <div class="tags">
           <span class="tag tag-runtime">Runtime Infra</span>
           <span class="tag tag-app">Application</span>
+        </div>
+        <div class="project-image">
+          <img src="/src/poster.png" alt="MoltFocus Poster" />
         </div>
         <p>
           MoltFocus is an agent-native daily planner that co-evolves with you through a built-in scheduling engine that generates time-blocked plans while learning from your nightly check-ins and reflections. The system features constraint-based task scheduling, pattern analytics that adapt recommendations over time, dual web and terminal interfaces, a 22-endpoint REST API, and file-based storage (YAML, JSON, Markdown) that keeps you in control without vendor lock-in.
         </p>
         <div class="project-links">
-          <a href="https://github.com/JingwenGu0829/MoltFocus" target="_blank">View on GitHub →</a>
+          <a href="https://github.com/JingwenGu0829/MoltFocus" target="_blank">GitHub &rarr;</a>
         </div>
-      </section>
-    </div>
+      </div>
 
-    <footer class="footer">
-      <div>© <span id="y"></span> Jingwen Gu <span class="sep">·</span> UCSD DS + Math-CS</div>
-      <div><a href="https://github.com/JingwenGu0829">GitHub</a> <span class="sep">·</span> <a href="#">LinkedIn</a></div>
-    </footer>
-  </main>
+      <footer class="footer">
+        <div>&copy; <span id="y"></span> Jingwen Gu</div>
+        <div>
+          <a href="https://github.com/JingwenGu0829">GitHub</a> &middot;
+          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/">LinkedIn</a>
+        </div>
+      </footer>
+    </main>
+  </div>
 
   <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
   <script src="/assets/js/main.js"></script>

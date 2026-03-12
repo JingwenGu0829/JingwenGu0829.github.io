@@ -4,73 +4,67 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Resume — Jingwen Gu</title>
-  <link rel="stylesheet" href="/assets/css/style.css" />
-  <style>
-    .pdf-container{
-      width:100%;
-      height:85vh;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid var(--border);
-      background:rgba(0,0,0,.2);
-    }
-    .pdf-container iframe{
-      width:100%;
-      height:100%;
-      border:none;
-    }
-    .download-link{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 18px;
-      background:rgba(255,255,255,.08);
-      border-radius:10px;
-      font-size:14px;
-      color:var(--fg);
-      transition: background 0.2s;
-      margin-top:16px;
-    }
-    .download-link:hover{
-      background:rgba(255,255,255,.15);
-      opacity:1;
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=4" />
 </head>
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/">
-        <span>Jingwen Gu</span>
-      </a>
+      <a class="brand" href="/">Jingwen Gu</a>
       <nav class="nav-links" aria-label="primary">
-        <a class="chip" href="/">Home</a>
-        <a class="chip" href="/projects/">Projects</a>
-        <a class="chip" href="/research/">Research</a>
-        <a class="chip active" href="/resume/">Resume</a>
-        <a class="chip" href="/blog/">Blog</a>
-        <a class="chip" href="/more/">More</a>
+        <a href="/">Home</a>
+        <a href="/projects/">Projects</a>
+        <a href="/research/">Research</a>
+        <a href="/resume/">Resume</a>
+        <a href="/blog/">Blog</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <h1 class="small-title fade-in">Resume</h1>
-    <p class="lead fade-in d2">View or download my resume below.</p>
+  <div class="page-wrap">
+    <aside class="sidebar">
+      <img src="/src/avatar.jpg" alt="Jingwen Gu" class="profile-photo" />
+      <div class="name">Jingwen Gu</div>
+      <div class="title">Undergraduate Student</div>
+      <div class="affiliation">UC San Diego</div>
+      <ul class="sidebar-links">
+        <li>
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:jig040@ucsd.edu">jig040@ucsd.edu</a>
+        </li>
+        <li>
+          <i class="fab fa-github"></i>
+          <a href="https://github.com/JingwenGu0829" target="_blank">GitHub</a>
+        </li>
+        <li>
+          <i class="fab fa-linkedin"></i>
+          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/" target="_blank">LinkedIn</a>
+        </li>
+      </ul>
+    </aside>
 
-    <div class="pdf-container fade-in d3">
-      <iframe src="/src/Jingwen_Resume.pdf" title="Jingwen Gu Resume"></iframe>
-    </div>
+    <main class="main-content">
+      <h1>Resume</h1>
+      <p>View or download my resume below.</p>
 
-    <a href="/src/Jingwen_Resume.pdf" download class="download-link fade-in d3">
-      ↓ Download PDF
-    </a>
+      <div class="pdf-container">
+        <iframe src="/src/Jingwen_Resume.pdf" title="Jingwen Gu Resume"></iframe>
+      </div>
 
-    <footer class="footer">
-      <div>© <span id="y"></span> Jingwen Gu</div>
-      <div><a href="https://github.com/JingwenGu0829">GitHub</a> <span class="sep">·</span> <a href="https://www.linkedin.com/in/jingwen-gu-606442304/">LinkedIn</a></div>
-    </footer>
-  </main>
+      <a href="/src/Jingwen_Resume.pdf" download class="download-link">
+        <i class="fas fa-download"></i> Download PDF
+      </a>
+
+      <footer class="footer">
+        <div>&copy; <span id="y"></span> Jingwen Gu</div>
+        <div>
+          <a href="https://github.com/JingwenGu0829">GitHub</a> &middot;
+          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/">LinkedIn</a>
+        </div>
+      </footer>
+    </main>
+  </div>
 
   <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
   <script src="/assets/js/main.js"></script>

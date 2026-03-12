@@ -4,42 +4,58 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>More — Jingwen Gu</title>
-  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=4" />
 </head>
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/">
-        <span>Jingwen Gu</span>
-      </a>
+      <a class="brand" href="/">Jingwen Gu</a>
       <nav class="nav-links" aria-label="primary">
-        <a class="chip" href="/">Home</a>
-        <a class="chip" href="/projects/">Projects</a>
-        <a class="chip" href="/research/">Research</a>
-        <a class="chip" href="/resume/">Resume</a>
-        <a class="chip" href="/blog/">Blog</a>
-        <a class="chip" href="/more/">More</a>
+        <a href="/">Home</a>
+        <a href="/projects/">Projects</a>
+        <a href="/research/">Research</a>
+        <a href="/resume/">Resume</a>
+        <a href="/blog/">Blog</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <h1 class="small-title fade-in">More</h1>
-    <p class="lead fade-in d2">Everything else: interests, talks, random experiments, contact, and links.</p>
+  <div class="page-wrap">
+    <aside class="sidebar">
+      <img src="/src/avatar.jpg" alt="Jingwen Gu" class="profile-photo" />
+      <div class="name">Jingwen Gu</div>
+      <div class="title">Undergraduate Student</div>
+      <div class="affiliation">UC San Diego</div>
+      <ul class="sidebar-links">
+        <li>
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:jig040@ucsd.edu">jig040@ucsd.edu</a>
+        </li>
+        <li>
+          <i class="fab fa-github"></i>
+          <a href="https://github.com/JingwenGu0829" target="_blank">GitHub</a>
+        </li>
+        <li>
+          <i class="fab fa-linkedin"></i>
+          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/" target="_blank">LinkedIn</a>
+        </li>
+      </ul>
+    </aside>
 
-    <section class="card pad fade-in d3">
-      <div class="list">
-        <div class="row"><b>Placeholder</b> — this page is scaffolded and ready for real content.</div>
-        <div class="row"><b>Links</b> — add GitHub/LinkedIn/etc when ready.</div>
-        <div class="row"><b>Notes</b> — we can evolve this layout anytime.</div>
-      </div>
-    </section>
+    <main class="main-content">
+      <h1>More</h1>
+      <p>Coming soon.</p>
 
-    <footer class="footer">
-      <div>© <span id="y"></span> Jingwen Gu <span class="sep">·</span> UCSD DS + Math-CS</div>
-      <div><a href="https://github.com/JingwenGu0829">GitHub</a> <span class="sep">·</span> <a href="#">LinkedIn</a></div>
-    </footer>
-  </main>
+      <footer class="footer">
+        <div>&copy; <span id="y"></span> Jingwen Gu</div>
+        <div>
+          <a href="https://github.com/JingwenGu0829">GitHub</a> &middot;
+          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/">LinkedIn</a>
+        </div>
+      </footer>
+    </main>
+  </div>
 
   <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
   <script src="/assets/js/main.js"></script>
