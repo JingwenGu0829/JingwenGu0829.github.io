@@ -237,8 +237,9 @@ img { max-width: 100%; height: auto; }
 .tag-rl-theory { background: #f3f0ff; color: #6b4fbb; border-color: #ddd6fe; }
 .tag-leadership { background: #fff8eb; color: #b45309; border-color: #fde68a; }
 .tag-quant { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
-.tag-runtime { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
+.tag-agent { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
 .tag-app { background: #fdf2f8; color: #be185d; border-color: #fbcfe8; }
+.tag-inference { background: #fefce8; color: #a16207; border-color: #fde68a; }
 
 /* ── Project items ── */
 .project-item {
