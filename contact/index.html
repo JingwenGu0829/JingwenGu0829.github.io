@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Jingwen Gu: Personal site and portfolio</title>
+  <title>Contact — Jingwen Gu</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" />
   <link rel="stylesheet" href="/assets/css/style.css?v=4" />
@@ -46,23 +46,24 @@
     </aside>
 
     <main class="main-content">
-      <h1>About</h1>
-      <p>
-        Hi, I'm Jingwen Gu! I'm a B.S. student in Math-Computer Science and Data Science at UC San Diego.
-      </p>
-      <p>
-        My current research interest lies in <strong>Inference Infrastructure in Reinforcement Learning Systems</strong>
-        and designs of <strong>Agentic Runtime Infrastructure</strong>.
-        My previous research and project experiences span areas including RLVR mechanisms,
-        RLHF theory for computational complexity, and efficient quantitative finance systems.
-      </p>
+      <h1>Contact</h1>
+      <p>Feel free to reach out using the form below.</p>
 
-      <h2>Research Interests</h2>
-      <ul>
-        <li>Efficient LLM Serving System</li>
-        <li>Agent System</li>
-        <li>Reinforcement Learning Theory/System</li>
-      </ul>
+      <form action="mailto:jig040@ucsd.edu" method="POST" enctype="text/plain">
+        <label>
+          Your email
+          <input type="email" name="email" value="you@example.com" />
+        </label>
+        <label>
+          Subject
+          <input type="text" name="subject" value="Hello!" />
+        </label>
+        <label>
+          Message
+          <textarea name="body" rows="5">Hi Jingwen, I wanted to reach out about...</textarea>
+        </label>
+        <button type="submit">Send</button>
+      </form>
 
       <footer class="footer">
         <div>&copy; <span id="y"></span> Jingwen Gu</div>
