@@ -1,8 +1,8 @@
 # JingwenGu0829.github.io
 
-Personal website (GitHub Pages).
+Minimal one-page academic website hosted with GitHub Pages.
 
-- Static HTML/CSS/JS (no build step)
-- Sections: Projects / Research / Resume / Blog / More
-
-To edit: change files and push to `main`.
+- About and essential contact links
+- Open-source work with live GitHub star counts
+- Research and honors thesis link
+- Static HTML, CSS, and JavaScript with no build step

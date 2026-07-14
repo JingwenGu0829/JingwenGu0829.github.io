@@ -2,79 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Jingwen Gu: Personal site and portfolio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css" />
-  <link rel="stylesheet" href="/assets/css/style.css?v=4" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Jingwen Gu is a UC San Diego student working on multimodal inference, reinforcement learning infrastructure, and open-source ML systems." />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Jingwen Gu</title>
+  <link rel="icon" href="/src/avatar.jpg" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=5" />
 </head>
 <body>
-  <header class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="/">Jingwen Gu</a>
-      <nav class="nav-links" aria-label="primary">
-        <a href="/">Home</a>
-        <a href="/projects/">Projects</a>
-        <a href="/research/">Research</a>
-        <a href="/resume/">Resume</a>
-        <a href="/blog/">Blog</a>
-        <a href="https://github.com/JingwenGu0829" target="_blank">GitHub</a>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="site-title" href="/">Jingwen Gu</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#open-source">Open Source</a>
+        <a href="#research">Research</a>
       </nav>
     </div>
   </header>
 
-  <div class="page-wrap">
-    <aside class="sidebar">
-      <img src="/src/avatar.jpg" alt="Jingwen Gu" class="profile-photo" />
-      <div class="name">Jingwen Gu</div>
-      <div class="title">Undergraduate Student</div>
-      <div class="affiliation">UC San Diego</div>
-      <ul class="sidebar-links">
+  <div class="layout">
+    <aside class="profile" aria-label="Profile">
+      <img class="profile-photo" src="/src/avatar.jpg" alt="Illustrated portrait of Jingwen Gu" width="220" height="220" />
+      <h1>Jingwen Gu</h1>
+      <p class="profile-role">Undergraduate student</p>
+      <p class="profile-affiliation">UC San Diego</p>
+
+      <ul class="contact-list" aria-label="Contact links">
         <li>
-          <i class="fas fa-envelope"></i>
-          <a href="mailto:jig040@ucsd.edu">jig040@ucsd.edu</a>
+          <span aria-hidden="true">@</span>
+          <a href="mailto:jig040@ucsd.edu">Email</a>
         </li>
         <li>
-          <i class="fab fa-github"></i>
-          <a href="https://github.com/JingwenGu0829" target="_blank">GitHub</a>
+          <span aria-hidden="true">GH</span>
+          <a href="https://github.com/JingwenGu0829" target="_blank" rel="noreferrer">GitHub</a>
         </li>
         <li>
-          <i class="fab fa-linkedin"></i>
-          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/" target="_blank">LinkedIn</a>
+          <span aria-hidden="true">in</span>
+          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/" target="_blank" rel="noreferrer">LinkedIn</a>
         </li>
       </ul>
     </aside>
 
-    <main class="main-content">
-      <h1>About</h1>
-      <p>
-        Hi, I'm Jingwen Gu! I'm a B.S. student in Math-Computer Science and Data Science at UC San Diego.
-      </p>
-      <p>
-        My current research interest lies in <strong>Inference Infrastructure in Reinforcement Learning Systems</strong>
-        and designs of <strong>Agentic Runtime Infrastructure</strong>.
-        My previous research and project experiences span areas including RLVR mechanisms,
-        RLHF theory for computational complexity, and efficient quantitative finance systems.
-      </p>
+    <main id="content" class="content">
+      <section id="about" class="section about-section" aria-labelledby="about-title">
+        <h2 id="about-title">About</h2>
+        <p class="intro">
+          I am an undergraduate at UC San Diego studying Data Science and Math–Computer Science (Honors).
+          I work on efficient multimodal inference and reinforcement learning infrastructure, with a broader
+          interest in the systems and theory behind modern post-training. I am currently a research intern at
+          Tencent Hunyuan AI Lab and an open-source developer in the SGLang ecosystem.
+        </p>
+      </section>
 
-      <h2>Research Interests</h2>
-      <ul>
-        <li>Efficient LLM Serving System</li>
-        <li>Agent System</li>
-        <li>Reinforcement Learning Theory/System</li>
-      </ul>
+      <section id="open-source" class="section" aria-labelledby="oss-title">
+        <div class="section-heading">
+          <h2 id="oss-title">Open Source</h2>
+          <a class="section-link" href="https://github.com/JingwenGu0829" target="_blank" rel="noreferrer">GitHub profile <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="project-grid">
+          <a class="project-card" href="https://github.com/sgl-project/sglang-omni" target="_blank" rel="noreferrer">
+            <div class="card-topline">
+              <span class="repo-name">sgl-project / sglang-omni</span>
+              <span class="star-count" data-repo="sgl-project/sglang-omni" aria-label="628 GitHub stars">
+                <span aria-hidden="true">★</span>
+                <span data-star-value>628</span>
+              </span>
+            </div>
+            <h3>SGLang-Omni</h3>
+            <p>A high-performance multi-stage serving runtime for omni, speech, and text-to-speech models.</p>
+            <span class="card-link">View repository <span aria-hidden="true">↗</span></span>
+          </a>
+
+          <a class="project-card" href="https://github.com/radixark/miles" target="_blank" rel="noreferrer">
+            <div class="card-topline">
+              <span class="repo-name">radixark / miles</span>
+              <span class="star-count" data-repo="radixark/miles" aria-label="1.7 thousand GitHub stars">
+                <span aria-hidden="true">★</span>
+                <span data-star-value>1.7k</span>
+              </span>
+            </div>
+            <h3>Miles</h3>
+            <p>An enterprise-ready reinforcement learning framework for large-scale LLM and VLM post-training.</p>
+            <span class="card-link">View repository <span aria-hidden="true">↗</span></span>
+          </a>
+        </div>
+      </section>
+
+      <section id="research" class="section" aria-labelledby="research-title">
+        <h2 id="research-title">Research</h2>
+        <article class="research-item">
+          <div>
+            <p class="research-meta">UC San Diego · Honors Thesis · 2026</p>
+            <h3>Ladder-BAI: Beating Preference Saturation with Warm-Started Best-Arm Identification</h3>
+            <p class="research-note">Undergraduate Math–Computer Science Honors Program · Advisor: Lijun Ding</p>
+          </div>
+          <a class="paper-link" href="https://math.ucsd.edu/sites/math.ucsd.edu/files/undergrad/honors-program/honors-theses/2025-2026/Gu%2CJingwen_Math_Honors_Thesis.pdf" target="_blank" rel="noreferrer">
+            Read thesis <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+      </section>
 
       <footer class="footer">
-        <div>&copy; <span id="y"></span> Jingwen Gu</div>
-        <div>
-          <a href="https://github.com/JingwenGu0829">GitHub</a> &middot;
-          <a href="https://www.linkedin.com/in/jingwen-gu-606442304/">LinkedIn</a>
-        </div>
+        <span>© <span id="year">2026</span> Jingwen Gu</span>
+        <span>Last updated July 2026</span>
       </footer>
     </main>
   </div>
 
-  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
-  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/main.js" defer></script>
 </body>
 </html>
