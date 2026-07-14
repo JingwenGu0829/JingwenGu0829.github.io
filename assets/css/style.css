@@ -322,6 +322,48 @@ a:focus-visible {
   font-weight: 600;
 }
 
+.work-item {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  align-items: start;
+  gap: 22px;
+}
+
+.company-logo {
+  display: block;
+  width: 72px;
+  height: 72px;
+  padding: 5px;
+  object-fit: contain;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.work-item h3 {
+  margin: 0 0 3px;
+  color: var(--heading);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.work-role {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.work-description {
+  max-width: 680px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
 .research-item {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -506,6 +548,17 @@ a:focus-visible {
   .research-item {
     grid-template-columns: 1fr;
     gap: 18px;
+  }
+
+  .work-item {
+    grid-template-columns: 60px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .company-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
   }
 
   .paper-link {
