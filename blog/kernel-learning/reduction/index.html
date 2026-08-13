@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A CuTe DSL implementation of parallel reduction." />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Reduction · Kernel Learning · Jingwen Gu</title>
+  <link rel="icon" href="/src/avatar.jpg" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=9" />
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="site-title" href="/">Jingwen Gu</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="/#about">About</a>
+        <a href="/blog/" aria-current="page">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-shell article-shell">
+    <main id="content" class="page-main">
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumbs">
+          <li><a href="/blog/">Blog</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href="/blog/kernel-learning/">Kernel Learning</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page">Reduction</li>
+        </ol>
+      </nav>
+
+      <header class="article-header">
+        <p class="page-kicker">Kernel Learning · 01</p>
+        <h1 class="article-title">Reduction</h1>
+        <p class="article-meta">CuTe DSL · Multi-CTA reduction with atomic aggregation</p>
+      </header>
+
+      <section class="article-section" aria-labelledby="problem-title">
+        <h2 id="problem-title">Problem</h2>
+        <div class="problem-citation">
+          <p>
+            Given a contiguous one-dimensional tensor of <code>N</code> float32 values, compute their sum and
+            write the result to <code>output[0]</code>.
+          </p>
+          <p>
+            Source: <a href="https://leetgpu.com/challenges/reduction" target="_blank" rel="noreferrer">LeetGPU — Reduction <span aria-hidden="true">↗</span></a>.
+            Challenge definition: <a href="https://github.com/AlphaGPU/leetgpu-challenges/tree/5a5c5d8062d95b1dd401005f0eb298710d281652/challenges/medium/4_reduction" target="_blank" rel="noreferrer">AlphaGPU/leetgpu-challenges <span aria-hidden="true">↗</span></a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section" aria-labelledby="execution-title">
+        <h2 id="execution-title">1. Execution model &amp; dataflow</h2>
+        <p class="section-lede">
+          The reduction narrows the tensor hierarchically: each level emits fewer partial sums before the
+          final GPU-wide atomic aggregation.
+        </p>
+
+        <figure class="reduction-flow" aria-labelledby="reduction-flow-caption">
+          <div class="flow-legend" aria-label="Memory space legend">
+            <span><i class="flow-swatch flow-swatch--hbm"></i>HBM / global memory</span>
+            <span><i class="flow-swatch flow-swatch--register"></i>Registers</span>
+            <span><i class="flow-swatch flow-swatch--shared"></i>Shared memory</span>
+          </div>
+
+          <div class="flow-phase flow-phase--init">
+            <span class="flow-phase-label">Launch 1</span>
+            <div class="flow-node flow-node--kernel">
+              <span class="flow-node-kicker">Identity initialization</span>
+              <strong>clear_output_kernel</strong>
+              <code>output[0] = 0.0</code>
+            </div>
+            <div class="flow-connector flow-connector--launch">
+              <span>same stream, ordered before reduction</span>
+            </div>
+            <div class="flow-node flow-node--hbm flow-node--compact">
+              <span class="flow-node-kicker">HBM · float32</span>
+              <strong>output[0]</strong>
+              <code>0.0</code>
+            </div>
+          </div>
+
+          <div class="flow-phase-divider"><span>Launch 2 · reduction_kernel</span></div>
+
+          <div class="flow-node flow-node--hbm flow-node--wide">
+            <span class="flow-node-kicker">HBM · contiguous float32 tensor</span>
+            <strong>input[0:N]</strong>
+            <span>Source values shared by the whole grid</span>
+          </div>
+
+          <div class="flow-down">
+            <span>coalesced loads through a grid-stride loop</span>
+          </div>
+
+          <div class="flow-grid-stage">
+            <div class="flow-grid-header">
+              <div>
+                <span class="flow-node-kicker">Grid</span>
+                <strong>1,056 CTAs × 256 threads</strong>
+              </div>
+              <code>GRID_SIZE = 132 × 8</code>
+            </div>
+
+            <div class="flow-replicas" aria-label="The same pipeline runs in every CTA">
+              <span>CTA 0</span>
+              <span>CTA 1</span>
+              <span>CTA 2</span>
+              <span>…</span>
+              <span>CTA 1055</span>
+            </div>
+
+            <p class="flow-inside-label">Inside each CTA</p>
+            <div class="flow-cta-pipeline">
+              <div class="flow-node flow-node--register">
+                <span class="flow-node-kicker">Registers · thread level</span>
+                <strong>256 × thread_sum</strong>
+                <span>Each thread accumulates its strided input values.</span>
+              </div>
+
+              <div class="flow-connector">
+                <span>warp shuffle</span>
+              </div>
+
+              <div class="flow-node flow-node--register">
+                <span class="flow-node-kicker">Registers · warp level</span>
+                <strong>8 × warp_sum</strong>
+                <span><code>shuffle_down</code> reduces 32 lanes to lane 0.</span>
+              </div>
+
+              <div class="flow-connector">
+                <span>lane 0 stores</span>
+              </div>
+
+              <div class="flow-node flow-node--shared">
+                <span class="flow-node-kicker">Shared memory · CTA level</span>
+                <strong>warp_sums[8]</strong>
+                <span>One partial sum from each warp.</span>
+              </div>
+
+              <div class="flow-connector">
+                <span><code>sync_threads()</code></span>
+              </div>
+
+              <div class="flow-node flow-node--register">
+                <span class="flow-node-kicker">Registers · warp 0</span>
+                <strong>1 × block_sum</strong>
+                <span>Warp 0 reduces the eight shared partials.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-down">
+            <span>lane 0 of every CTA emits one block_sum</span>
+          </div>
+
+          <div class="flow-fanin" aria-label="Block sums from every CTA converge on one atomic target">
+            <span>CTA 0</span>
+            <span>CTA 1</span>
+            <span>CTA 2</span>
+            <span>…</span>
+            <span>CTA 1055</span>
+          </div>
+
+          <div class="flow-down flow-down--atomic">
+            <span>1 atomic operation per CTA · 1,056 total</span>
+          </div>
+
+          <div class="flow-node flow-node--atomic flow-node--wide">
+            <span class="flow-node-kicker">GPU-scope atomic read-modify-write</span>
+            <strong><code>atomic_add(output.iterator, block_sum)</code></strong>
+            <span><code>sem="relaxed"</code> · <code>scope="gpu"</code></span>
+          </div>
+
+          <div class="flow-down">
+            <span>all CTAs update the same address</span>
+          </div>
+
+          <div class="flow-node flow-node--hbm flow-node--wide flow-node--result">
+            <span class="flow-node-kicker">HBM · final scalar</span>
+            <strong>output[0]</strong>
+            <code>0 + Σ block_sum = Σ input[i]</code>
+          </div>
+
+          <figcaption id="reduction-flow-caption">
+            Register-local accumulation removes most values cheaply; only eight values per CTA touch shared
+            memory, and only one value per CTA contends on the global output address.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="article-section" aria-labelledby="solution-title">
+        <h2 id="solution-title">2. Current solution</h2>
+        <div class="code-panel">
+          <div class="code-panel-header">
+            <span>v02_multi_cta_atomic.py</span>
+            <span>Python · CuTe DSL</span>
+          </div>
+          <pre><code class="language-python">import cutlass
+import cutlass.cute as cute
+
+
+BLOCK_SIZE = 256
+GRID_SIZE = 132 * 8
+WARP_SIZE = 32
+WARPS_PER_BLOCK = BLOCK_SIZE // WARP_SIZE
+
+
+@cute.jit
+def warp_sum(value: cutlass.Float32) -&gt; cutlass.Float32:
+    value += cute.arch.shuffle_sync_down(value, offset=16)
+    value += cute.arch.shuffle_sync_down(value, offset=8)
+    value += cute.arch.shuffle_sync_down(value, offset=4)
+    value += cute.arch.shuffle_sync_down(value, offset=2)
+    value += cute.arch.shuffle_sync_down(value, offset=1)
+    return value
+
+
+@cute.kernel
+def clear_output_kernel(output: cute.Tensor):
+    """Give the following atomic reduction a defined identity value."""
+    output[0] = cutlass.Float32(0.0)
+
+
+@cute.kernel
+def reduction_kernel(
+    input: cute.Tensor,
+    output: cute.Tensor,
+    N: cute.Int32,
+):
+    thread_idx, _, _ = cute.arch.thread_idx()
+    block_idx, _, _ = cute.arch.block_idx()
+    grid_size, _, _ = cute.arch.grid_dim()
+    lane_idx = cute.arch.lane_idx()
+    warp_idx = cute.arch.warp_idx()
+
+    thread_sum = cutlass.Float32(0.0)
+    index = block_idx * BLOCK_SIZE + thread_idx
+    grid_stride = grid_size * BLOCK_SIZE
+    while index &lt; N:
+        thread_sum += input[index]
+        index += grid_stride
+
+    thread_sum = warp_sum(thread_sum)
+
+    smem = cutlass.utils.SmemAllocator()
+    warp_sums = smem.allocate_tensor(cutlass.Float32, WARPS_PER_BLOCK)
+    if lane_idx == 0:
+        warp_sums[warp_idx] = thread_sum
+
+    cute.arch.sync_threads()
+
+    if warp_idx == 0:
+        block_sum = cutlass.Float32(0.0)
+        if lane_idx &lt; WARPS_PER_BLOCK:
+            block_sum = warp_sums[lane_idx]
+        block_sum = warp_sum(block_sum)
+
+        if lane_idx == 0:
+            cute.arch.atomic_add(
+                output.iterator,
+                block_sum,
+                sem="relaxed",
+                scope="gpu",
+            )
+
+
+@cute.jit
+def solve(input: cute.Tensor, output: cute.Tensor, N: cute.Int32):
+    """LeetGPU entry point: clear output, then reduce with many CTAs."""
+    clear_output_kernel(output).launch(
+        grid=[1, 1, 1],
+        block=[1, 1, 1],
+    )
+    reduction_kernel(input, output, N).launch(
+        grid=[GRID_SIZE, 1, 1],
+        block=[BLOCK_SIZE, 1, 1],
+    )</code></pre>
+        </div>
+      </section>
+
+      <section class="article-section" aria-labelledby="takeaways-title">
+        <h2 id="takeaways-title">3. Takeaways</h2>
+        <div class="takeaway-grid">
+          <div class="takeaway-card">
+            <h3>GPU programming model</h3>
+            <ul>
+              <li>Reduce hierarchically: thread registers → warp shuffle → CTA shared memory → one global atomic.</li>
+              <li>A grid-stride loop lets a fixed grid cover arbitrary <code>N</code> while keeping many CTAs resident.</li>
+              <li>Reducing inside the CTA first changes 256 potential atomics into one atomic per CTA.</li>
+              <li><code>sync_threads()</code> is required before warp 0 reads the partials written by the other warps.</li>
+              <li>The atomic target is one float32 in HBM, so it must be initialized to the additive identity before accumulation.</li>
+            </ul>
+          </div>
+
+          <div class="takeaway-card">
+            <h3>CuTe DSL mental model</h3>
+            <ul>
+              <li><code>cute.Tensor</code> carries a memory iterator plus layout; indexing maps coordinates onto that storage.</li>
+              <li><code>output.iterator</code> points at the tensor's current origin—here, effectively <code>&amp;output[0]</code>.</li>
+              <li><code>shuffle_sync_down</code> exchanges register values between lanes without shared memory.</li>
+              <li><code>SmemAllocator.allocate_tensor</code> creates typed CTA-local scratch storage for the eight warp sums.</li>
+              <li><code>atomic_add(..., sem="relaxed", scope="gpu")</code> provides atomicity across the GPU without unnecessary ordering guarantees.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© <span id="year">2026</span> Jingwen Gu</span>
+      <span>Last updated August 2026</span>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
+</body>
+</html>
