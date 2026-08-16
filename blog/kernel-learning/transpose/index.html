@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Learning matrix transpose through coalescing, shared-memory tiling, bank conflicts, padding, and CuTe XOR swizzles." />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Matrix Transpose · Kernel Learning · Jingwen Gu</title>
+  <link rel="icon" href="/src/avatar.jpg" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=10" />
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="site-title" href="/">Jingwen Gu</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="/#about">About</a>
+        <a href="/blog/" aria-current="page">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-shell article-shell">
+    <main id="content" class="page-main">
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumbs">
+          <li><a href="/blog/">Blog</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href="/blog/kernel-learning/">Kernel Learning</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page">Matrix Transpose</li>
+        </ol>
+      </nav>
+
+      <header class="article-header transpose-header">
+        <p class="page-kicker">Kernel Learning · 02</p>
+        <h1 class="article-title">Matrix Transpose</h1>
+        <p class="article-deck">
+          A transpose performs almost no arithmetic. That makes it a clean experiment in what actually
+          matters to a GPU memory system: not only <em>where</em> the bytes live, but which addresses a warp
+          requests together.
+        </p>
+      </header>
+
+      <section class="article-section" aria-labelledby="problem-title">
+        <h2 id="problem-title">Problem</h2>
+        <div class="problem-citation">
+          <p>
+            Given a contiguous row-major <code>rows × cols</code> float32 matrix, write its contiguous
+            <code>cols × rows</code> transpose:
+            <code>output[col, row] = input[row, col]</code>.
+          </p>
+          <p>
+            Constraints: <code>1 ≤ rows, cols ≤ 8192</code>. The performance case is
+            <code>7000 × 6000</code>: 42 million values, or 168 MB read plus 168 MB written.
+          </p>
+          <p>
+            Source: <a href="https://leetgpu.com/challenges/matrix-transpose" target="_blank" rel="noreferrer">LeetGPU — Matrix Transpose <span aria-hidden="true">↗</span></a>.
+            Challenge revision: <a href="https://github.com/AlphaGPU/leetgpu-challenges/tree/5a5c5d8062d95b1dd401005f0eb298710d281652/challenges/easy/3_matrix_transpose" target="_blank" rel="noreferrer">AlphaGPU/leetgpu-challenges <span aria-hidden="true">↗</span></a>.
+          </p>
+        </div>
+
+        <div class="experiment-strip" aria-label="Experiment environment">
+          <span><strong>GPU</strong>NVIDIA H200 · SM90</span>
+          <span><strong>CuTe DSL</strong>CUTLASS 4.6.2</span>
+          <span><strong>Timing</strong>5 warmups · 50 runs</span>
+          <span><strong>Profiler</strong>Nsight Compute 2025.3.1</span>
+        </div>
+
+        <p class="section-lede">
+          Effective bandwidth below is <code>2 × rows × cols × sizeof(float) / time</code>. It counts the
+          336 MB of useful input-plus-output traffic, not every transaction created inside the cache hierarchy.
+        </p>
+
+        <div class="result-table-wrap">
+          <table class="result-table">
+            <thead>
+              <tr>
+                <th>Version</th>
+                <th>Change</th>
+                <th>Median</th>
+                <th>Effective BW</th>
+                <th>vs. v00</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>v00</code></td>
+                <td>Direct scalar mapping</td>
+                <td>692.03 µs</td>
+                <td>485.53 GB/s</td>
+                <td>1.00×</td>
+              </tr>
+              <tr>
+                <td><code>v01</code></td>
+                <td>Unpadded shared tile</td>
+                <td>197.15 µs</td>
+                <td>1,704.27 GB/s</td>
+                <td>3.51×</td>
+              </tr>
+              <tr class="result-table-best">
+                <td><code>v02</code></td>
+                <td>One padding column</td>
+                <td>97.78 µs</td>
+                <td>3,436.43 GB/s</td>
+                <td>7.08×</td>
+              </tr>
+              <tr>
+                <td><code>v03</code></td>
+                <td>CuTe XOR swizzle</td>
+                <td>98.94 µs</td>
+                <td>3,395.86 GB/s</td>
+                <td>6.99×</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="article-section iteration-section" aria-labelledby="v00-title">
+        <div class="iteration-heading">
+          <span class="version-badge">v00</span>
+          <div>
+            <h2 id="v00-title">Direct scalar mapping</h2>
+            <p>Start with the most literal correct kernel: one thread moves one value.</p>
+          </div>
+        </div>
+
+        <h3>Knowledge point: logical coordinates are not memory transactions</h3>
+        <p>
+          A row-major layout turns a two-dimensional coordinate into a one-dimensional word offset. The
+          transpose changes the coordinate, then the output layout maps that new coordinate back to storage:
+        </p>
+
+        <div class="equation-pair">
+          <code>input_offset = row × cols + col</code>
+          <code>output_offset = col × rows + row</code>
+        </div>
+
+        <p>
+          CuTe's <code>Tensor</code> makes the same separation explicit: it carries an iterator and a layout,
+          and <code>input[row, col]</code> asks that layout for an address. A rank-two
+          <code>tensor[linear]</code> should not be treated as a raw-pointer offset, so this first version keeps
+          the two coordinates explicit.
+        </p>
+
+        <div class="code-panel">
+          <div class="code-panel-header">
+            <span>v00_naive_scalar.py</span>
+            <span>complete baseline</span>
+          </div>
+          <pre><code class="language-python">import cutlass.cute as cute
+
+
+BLOCK_SIZE = 256
+
+
+@cute.kernel
+def transpose_kernel(
+    input: cute.Tensor,
+    output: cute.Tensor,
+    rows: cute.Int32,
+    cols: cute.Int32,
+):
+    thread_idx, _, _ = cute.arch.thread_idx()
+    block_idx, _, _ = cute.arch.block_idx()
+
+    linear_idx = block_idx * BLOCK_SIZE + thread_idx
+    element_count = rows * cols
+    if linear_idx &lt; element_count:
+        row = linear_idx // cols
+        col = linear_idx - row * cols
+        output[col, row] = input[row, col]
+
+
+@cute.jit
+def solve(
+    input: cute.Tensor,
+    output: cute.Tensor,
+    rows: cute.Int32,
+    cols: cute.Int32,
+):
+    """LeetGPU entry point: launch enough threads for all matrix elements."""
+    element_count = rows * cols
+    grid_size = cute.ceil_div(element_count, BLOCK_SIZE)
+    transpose_kernel(input, output, rows, cols).launch(
+        grid=[grid_size, 1, 1],
+        block=[BLOCK_SIZE, 1, 1],
+    )</code></pre>
+        </div>
+
+        <h3>Profile: both arrays are in HBM, so why are load and store different?</h3>
+        <p>
+          Coalescing happens when the memory unit combines the 32 lane addresses of <em>one warp
+          instruction</em> into cache-line sectors. It happens before those requests reach HBM. Here adjacent
+          lanes load adjacent input words, only 4 bytes apart, so a warp's 32 float32 loads occupy one 128-byte
+          span. The stores are different: adjacent lanes increase <code>col</code>, so their output addresses are
+          <code>rows × 4 = 28,000</code> bytes apart.
+        </p>
+
+        <div class="address-lanes" aria-label="Warp load and store address spacing">
+          <div class="lane-pattern lane-pattern-good">
+            <span class="lane-pattern-label">load</span>
+            <div><i>lane 0</i><i>1</i><i>2</i><i>3</i><b>…</b><i>31</i></div>
+            <code>+4 B between lanes</code>
+            <strong>4 × 32 B sectors</strong>
+          </div>
+          <div class="lane-pattern lane-pattern-bad">
+            <span class="lane-pattern-label">store</span>
+            <div><i>lane 0</i><i>1</i><i>2</i><i>3</i><b>…</b><i>31</i></div>
+            <code>+28,000 B between lanes</code>
+            <strong>up to 32 separate sectors</strong>
+          </div>
+        </div>
+
+        <div class="profile-finding">
+          <div>
+            <span class="profile-kicker">NCU evidence</span>
+            <strong>36.75 M excessive L2 sectors</strong>
+            <p>
+              The 1.3125 M warp stores expand to roughly 42 M sectors. L2 sees about 1.34 GB of write traffic
+              for a logical 168 MB output and reaches 77.56% of peak throughput.
+            </p>
+          </div>
+          <div>
+            <span class="profile-kicker">Next hypothesis</span>
+            <strong>Change transaction shape, not the math</strong>
+            <p>
+              Read rows coalesced, temporarily stage a square tile, then read that tile by columns so the
+              output can also be written as contiguous rows.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section iteration-section" aria-labelledby="v01-title">
+        <div class="iteration-heading">
+          <span class="version-badge">v01</span>
+          <div>
+            <h2 id="v01-title">A shared-memory tiled transpose</h2>
+            <p>Use shared memory as a coordinate-changing scratchpad between two coalesced global accesses.</p>
+          </div>
+        </div>
+
+        <h3>Knowledge point: a 32 × 8 block can move a 32 × 32 tile</h3>
+        <p>
+          CUDA linearizes thread coordinates with <code>threadIdx.x</code> varying fastest. Because
+          <code>blockDim.x = 32</code>, every fixed <code>ty</code> is exactly one warp and
+          <code>lane_id = tx</code>. This launch mapping and a CuTe tensor layout use the same coordinate-to-linear
+          idea, but they describe different things: CUDA maps threads to lanes; CuTe maps tensor coordinates to
+          addresses.
+        </p>
+
+        <div class="concept-grid concept-grid-three">
+          <div class="concept-card">
+            <span>Thread block</span>
+            <strong><code>32 × 8 = 256</code> threads</strong>
+            <p>Eight warps; each warp is one row of 32 adjacent <code>tx</code> values.</p>
+          </div>
+          <div class="concept-card">
+            <span>Per-thread work</span>
+            <strong><code>j = 0, 8, 16, 24</code></strong>
+            <p>Each thread moves four elements. <code>range_constexpr</code> exposes these four rounds at compile time.</p>
+          </div>
+          <div class="concept-card">
+            <span>Data tile</span>
+            <strong><code>256 × 4 = 1,024</code> values</strong>
+            <p>The same coverage as 32 × 32 threads, without making every CTA a maximum-size 1,024-thread block.</p>
+          </div>
+        </div>
+
+        <p>
+          The load phase writes ordinary rows into shared memory; no data has moved to a transposed position yet.
+          After the barrier, exchanging the two shared-memory indices turns one column read into one contiguous
+          output row.
+        </p>
+
+        <figure class="article-visual transpose-flow-visual">
+          <img src="/assets/diagrams/transpose-tile-flow.svg" alt="Two-phase transpose flow. Eight warps load four horizontal bands into a 32 by 32 shared tile, synchronize, then read columns and store transposed rows." />
+        </figure>
+
+        <div class="note-callout">
+          <strong>Why the barrier is mandatory.</strong>
+          <p>
+            A value loaded by warp 0 may later be consumed by warp 7. <code>sync_threads()</code> is both a CTA
+            rendezvous and the shared-memory visibility boundary between these phases. Its cost is not a fixed
+            mysterious tax: fast warps wait only when slower warps have not finished. Removing it would create a
+            correctness race, not a valid performance tradeoff.
+          </p>
+        </div>
+
+        <h3>Code: v01</h3>
+        <p>
+          This is the first strategy rewrite, so a diff against v00 hides more than it reveals. The complete
+          tiled kernel makes the two phases and their shared coordinate system easier to read together.
+        </p>
+
+        <div class="code-panel">
+          <div class="code-panel-header">
+            <span>v01_smem_tiled.py</span>
+            <span>complete tiled kernel</span>
+          </div>
+          <pre><code class="language-python">import cutlass
+import cutlass.cute as cute
+
+
+TILE_DIM = 32
+BLOCK_ROWS = 8
+
+
+@cute.kernel
+def transpose_kernel(
+    input: cute.Tensor,
+    output: cute.Tensor,
+    rows: cute.Int32,
+    cols: cute.Int32,
+):
+    tx, ty, _ = cute.arch.thread_idx()
+    bx, by, _ = cute.arch.block_idx()
+
+    smem = cutlass.utils.SmemAllocator()
+    tile_layout = cute.make_layout(
+        (TILE_DIM, TILE_DIM),
+        stride=(TILE_DIM, 1),
+    )
+    tile = smem.allocate_tensor(cutlass.Float32, tile_layout)
+
+    input_col = bx * TILE_DIM + tx
+    for j in cutlass.range_constexpr(0, TILE_DIM, BLOCK_ROWS):
+        input_row = by * TILE_DIM + ty + j
+        if input_row &lt; rows and input_col &lt; cols:
+            tile[ty + j, tx] = input[input_row, input_col]
+
+    cute.arch.sync_threads()
+
+    output_col = by * TILE_DIM + tx
+    for j in cutlass.range_constexpr(0, TILE_DIM, BLOCK_ROWS):
+        output_row = bx * TILE_DIM + ty + j
+        if output_row &lt; cols and output_col &lt; rows:
+            output[output_row, output_col] = tile[tx, ty + j]
+
+
+@cute.jit
+def solve(
+    input: cute.Tensor,
+    output: cute.Tensor,
+    rows: cute.Int32,
+    cols: cute.Int32,
+):
+    transpose_kernel(input, output, rows, cols).launch(
+        grid=[
+            cute.ceil_div(cols, TILE_DIM),
+            cute.ceil_div(rows, TILE_DIM),
+            1,
+        ],
+        block=[TILE_DIM, BLOCK_ROWS, 1],
+    )</code></pre>
+        </div>
+
+        <div class="implementation-note">
+          <p>
+            <code>allocate_tensor</code> describes one 4 KiB allocation per CTA. Every thread executes code that
+            can index the tensor, but the compiler does not allocate 256 copies; all threads in that block see
+            the same CTA-local shared-memory region. Multiple CTAs can reside on one SM, each with a disjoint
+            allocation carved from that SM's shared-memory capacity.
+          </p>
+          <p>
+            In <code>(32, 32):(32, 1)</code>, the first tuple is the logical coordinate domain and the second is
+            each coordinate's contribution to the linear word offset: <code>offset(row, col) = row × 32 + col</code>.
+            <code>make_layout</code> defines that mapping; allocation binds the mapping to storage.
+          </p>
+        </div>
+
+        <h3>Profile: global traffic is fixed; shared traffic is not</h3>
+        <p>
+          v01 drops from 692.03 to 197.15 µs. NCU reports zero excessive global sectors, which confirms that the
+          load and store sides are now both coalesced. But it also reports 43.316 M actual shared-memory
+          wavefronts versus 2.630 M ideal: 40.686 M are excessive.
+        </p>
+
+        <div class="profile-finding">
+          <div>
+            <span class="profile-kicker">What improved</span>
+            <strong>Global sectors: ideal</strong>
+            <p>The scratchpad successfully turns the transposed output into contiguous warp stores.</p>
+          </div>
+          <div>
+            <span class="profile-kicker">What moved</span>
+            <strong>The bottleneck is now inside the SM</strong>
+            <p>The column read <code>tile[tx, fixed_col]</code> sends every lane to a different word in the same bank.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section iteration-section" aria-labelledby="v02-title">
+        <div class="iteration-heading">
+          <span class="version-badge">v02</span>
+          <div>
+            <h2 id="v02-title">Remove bank conflicts with padding</h2>
+            <p>Change one number in the physical shared layout: the row stride becomes 33 instead of 32.</p>
+          </div>
+        </div>
+
+        <h3>Knowledge point: banks serve a warp instruction</h3>
+        <p>
+          An SM's shared memory is physically split into 32 banks. For float32 words, the useful mental model is
+          <code>bank = word_offset mod 32</code>. A bank can serve one distinct word per wavefront. If multiple
+          lanes request different words in the same bank, the warp instruction is decomposed into additional
+          wavefronts. Lanes reading the exact same word are a broadcast and are not this conflict pattern.
+        </p>
+        <p>
+          Banks belong to the SM, while shared allocations belong to CTAs resident on that SM. Those facts are
+          orthogonal: the bank hardware is shared, but the conflict calculation is about the 32 addresses in one
+          warp instruction—not threads from unrelated warps or CTAs.
+        </p>
+
+        <figure class="article-visual bank-layout-visual">
+          <img src="/assets/diagrams/transpose-bank-layouts.svg" alt="Comparison of plain stride 32, padded stride 33, and XOR-swizzled shared-memory bank mappings. A column maps to one bank in the plain layout and all banks in the other two layouts." />
+        </figure>
+
+        <h3>Code: v01 → v02</h3>
+        <p>
+          The global coordinates, four load rounds, barrier, transposed shared read, and four store rounds are all
+          unchanged. This is the useful part of reading the implementation as a diff: the 2.02× speedup below is
+          attributable to one physical-layout change.
+        </p>
+
+        <div class="code-panel diff-panel diff-panel-compact">
+          <div class="code-panel-header">
+            <span>v01_smem_tiled.py → v02_smem_padded.py</span>
+            <span>layout-only diff</span>
+          </div>
+          <pre><code> TILE_DIM = 32
+ BLOCK_ROWS = 8
+<span class="diff-add">+SMEM_STRIDE = TILE_DIM + 1</span>
+
+ tile_layout = cute.make_layout(
+<span class="diff-del">-    (TILE_DIM, TILE_DIM),</span>
+<span class="diff-del">-    stride=(TILE_DIM, 1),</span>
+<span class="diff-add">+    (TILE_DIM, SMEM_STRIDE),</span>
+<span class="diff-add">+    stride=(SMEM_STRIDE, 1),</span>
+ )</code></pre>
+        </div>
+
+        <div class="equation-pair">
+          <code>offset(lane) = lane × 33 + fixed_col</code>
+          <code>bank(lane) = (lane + fixed_col) mod 32</code>
+        </div>
+
+        <h3>Profile: one padding column halves the time</h3>
+        <p>
+          Shared memory grows from 4,096 to 4,224 bytes per CTA—only 128 bytes. NCU now measures exactly
+          2.630 M actual and ideal shared wavefronts, with zero excessive shared wavefronts and still zero
+          excessive global sectors. Runtime falls to 97.78 µs, 2.02× faster than v01 and 7.08× faster than v00.
+        </p>
+
+        <div class="metric-ribbon" aria-label="v02 profile summary">
+          <span><small>Shared wavefronts</small><strong>actual = ideal</strong></span>
+          <span><small>Excessive global sectors</small><strong>0</strong></span>
+          <span><small>Dynamic shared memory</small><strong>4,224 B / CTA</strong></span>
+          <span><small>Achieved occupancy</small><strong>92.27%</strong></span>
+        </div>
+
+        <div class="note-callout note-callout-profile">
+          <strong>How to read “wavefronts” in NCU.</strong>
+          <p>
+            A high raw wavefront count alone does not prove bank conflicts; a large kernel naturally issues many
+            shared-memory requests. Compare <em>actual</em> with <em>ideal</em>, or inspect the excessive count. In
+            v01, 94% of shared wavefronts are excessive. In v02, actual equals ideal.
+          </p>
+        </div>
+      </section>
+
+      <section class="article-section iteration-section" aria-labelledby="v03-title">
+        <div class="iteration-heading">
+          <span class="version-badge">v03</span>
+          <div>
+            <h2 id="v03-title">Replace padding with a CuTe XOR swizzle</h2>
+            <p>Keep a compact 32 × 32 allocation and permute its bank-select bits instead.</p>
+          </div>
+        </div>
+
+        <h3>Knowledge point: a CuTe layout can be affine, or composed with a swizzle</h3>
+        <p>
+          The ordinary row-major layout first maps <code>(row, col)</code> to
+          <code>offset = row × 32 + col</code>. For a 32 × 32 tile, the low five offset bits are the column/bank
+          field and the next five bits are the row field. <code>cute.make_swizzle(5, 0, 5)</code> XORs those five
+          row bits into the five bank bits:
+        </p>
+
+        <div class="swizzle-bits" aria-label="CuTe swizzle bit fields">
+          <div>
+            <span>source bits</span>
+            <strong class="mono">row [5, 10)</strong>
+          </div>
+          <span class="swizzle-xor">XOR</span>
+          <div>
+            <span>destination bits</span>
+            <strong class="mono">column [0, 5)</strong>
+          </div>
+          <span class="swizzle-equals">→</span>
+          <code>physical_col = col XOR row</code>
+        </div>
+
+        <p>
+          XOR with a fixed row is a permutation, so every row access still touches 32 distinct banks. XOR with a
+          fixed column is also a permutation as <code>row</code> varies, so the transposed column read becomes
+          conflict-free too. The logical coordinates used by the kernel do not change; only their mapping to the
+          underlying shared words changes.
+        </p>
+
+        <h3>Code: v02 → v03</h3>
+        <div class="code-panel diff-panel">
+          <div class="code-panel-header">
+            <span>v02_smem_padded.py → v03_smem_swizzled.py</span>
+            <span>layout composition diff</span>
+          </div>
+          <pre><code> TILE_DIM = 32
+ BLOCK_ROWS = 8
+<span class="diff-del">-SMEM_STRIDE = TILE_DIM + 1</span>
+
+<span class="diff-del">-tile_layout = cute.make_layout(</span>
+<span class="diff-del">-    (TILE_DIM, SMEM_STRIDE),</span>
+<span class="diff-del">-    stride=(SMEM_STRIDE, 1),</span>
+<span class="diff-add">+base_layout = cute.make_layout(</span>
+<span class="diff-add">+    (TILE_DIM, TILE_DIM),</span>
+<span class="diff-add">+    stride=(TILE_DIM, 1),</span>
+ )
+
+<span class="diff-add">+smem_swizzle = cute.make_swizzle(5, 0, 5)</span>
+<span class="diff-add">+tile_layout = cute.make_composed_layout(</span>
+<span class="diff-add">+    smem_swizzle,</span>
+<span class="diff-add">+    0,</span>
+<span class="diff-add">+    base_layout,</span>
+<span class="diff-add">+)</span>
+ tile = smem.allocate_tensor(cutlass.Float32, tile_layout)
+
+ # The load loops, barrier, store loops, and launch are unchanged.</code></pre>
+        </div>
+
+        <div class="api-breakdown">
+          <div><code>B = 5</code><span>number of bits XORed</span></div>
+          <div><code>M = 0</code><span>destination starts at bit 0</span></div>
+          <div><code>S = 5</code><span>source starts five bits above it</span></div>
+        </div>
+
+        <h3>Profile: conflict-free does not automatically mean faster</h3>
+        <p>
+          v03 is correct, compact at 4,096 bytes per CTA, and NCU again reports zero excessive shared wavefronts
+          and zero excessive global sectors. It measures 98.94 µs—statistically close to, but about 1.2% slower
+          than, padding in this run.
+        </p>
+        <p>
+          Detailed replay explains the tradeoff: the swizzled version executes 56.26 M instructions versus
+          45.08 M for padding, about 24.8% more, because scalar address generation must apply the XOR mapping.
+          The 128-byte shared-memory saving does not improve occupancy for this kernel, so v02's simple affine
+          address calculation wins on this exact shape and hardware.
+        </p>
+
+        <p>
+          For scale, a same-shape contiguous device copy measured 88.16 µs (3,811.25 GB/s effective) in a quick
+          reference run. That is not a formal hardware roof, but v02 reaches about 90% of this practical copy
+          reference while also changing coordinates.
+        </p>
+
+        <div class="decision-card">
+          <div>
+            <span>Measured winner</span>
+            <strong>v02 · padding</strong>
+            <p>Minimal address work; the extra 128 B has no occupancy cost here.</p>
+          </div>
+          <div>
+            <span>More general tool</span>
+            <strong>v03 · swizzle</strong>
+            <p>Compact and composable; valuable when padding affects footprint, alignment, or a later copy atom.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" aria-labelledby="takeaways-title">
+        <h2 id="takeaways-title">Takeaways</h2>
+        <div class="takeaway-grid">
+          <div class="takeaway-card">
+            <h3>GPU programming model</h3>
+            <ul>
+              <li>HBM is a location; coalescing describes the shape of one warp's addresses before requests reach it.</li>
+              <li>A shared tile can exchange coordinates between a coalesced input phase and a coalesced output phase.</li>
+              <li>Bank conflicts are per warp instruction. Use actual versus ideal wavefronts—not the raw total—to diagnose them.</li>
+              <li>A <code>32 × 8</code> block keeps one warp across a row while four compile-time rounds cover a <code>32 × 32</code> tile.</li>
+              <li>Synchronization is required when one warp consumes another warp's shared-memory writes.</li>
+            </ul>
+          </div>
+
+          <div class="takeaway-card">
+            <h3>CuTe DSL mental model</h3>
+            <ul>
+              <li>A layout maps logical coordinates to a one-dimensional address; it does not allocate storage itself.</li>
+              <li><code>allocate_tensor</code> binds a typed layout to one CTA-local shared allocation visible to every thread in the block.</li>
+              <li><code>range_constexpr</code> expresses a static loop that the compiler can unroll.</li>
+              <li><code>make_composed_layout(swizzle, 0, base)</code> applies the affine layout first, then remaps its address bits.</li>
+              <li>Swizzle is not universally superior to padding: resource savings matter only if they change the limiting resource.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="closing-note">
+          This is a good stopping point for transpose. The next machinery—multistage asynchronous copies and
+          TMA—becomes much more instructive in GEMM or attention, where data movement can overlap substantial
+          compute instead of another memory operation.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© <span id="year">2026</span> Jingwen Gu</span>
+      <span>Last updated August 2026</span>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
+</body>
+</html>
