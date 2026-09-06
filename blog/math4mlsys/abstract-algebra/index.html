@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="How XOR permutations and associative composition turn structured math into hardware-friendly ML systems algorithms." />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Why a little abstract algebra goes a long way in ML systems" />
+  <meta property="og:description" content="XOR swizzles, associative composition, and the compact structure that makes both fast." />
+  <meta property="og:image" content="https://jingwengu0829.github.io/assets/blog/math4mlsys/abstract-algebra-cover.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Why a little abstract algebra goes a long way in ML systems" />
+  <meta name="twitter:description" content="XOR swizzles, associative composition, and the compact structure that makes both fast." />
+  <meta name="twitter:image" content="https://jingwengu0829.github.io/assets/blog/math4mlsys/abstract-algebra-cover.png" />
+  <title>Abstract algebra for ML systems · Jingwen Gu</title>
+  <link rel="icon" href="/src/avatar.jpg" />
+  <link rel="stylesheet" href="/assets/css/style.css?v=12" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="site-title" href="/">Jingwen Gu</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="/#about">About</a>
+        <a href="/blog/" aria-current="page">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-shell article-shell editorial-article-shell">
+    <main id="content" class="page-main">
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumbs">
+          <li><a href="/blog/">Blog</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href="/blog/math4mlsys/">Math4MLSys</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page">01</li>
+        </ol>
+      </nav>
+
+      <article class="editorial-article">
+        <header class="article-header editorial-article-header">
+          <p class="page-kicker">Math4MLSys · 01</p>
+          <h1 class="article-title">Why a little abstract algebra goes a long way in ML systems</h1>
+          <p class="article-meta article-meta--rich">
+            <span>Jingwen Gu</span>
+            <time datetime="2026-09-04">September 4, 2026</time>
+            <span>7 min read</span>
+          </p>
+        </header>
+
+        <div class="article-prose">
+          <p>
+            Many algorithms in ML systems look unrelated, but at the end of the day they are answering the
+            same question:
+          </p>
+
+          <blockquote class="thesis-quote">
+            <p>Can we replace a complicated computation with a cheap transformation whose structure we can understand?</p>
+          </blockquote>
+
+          <p>
+            Abstract algebra, in turn, gives us useful guarantees about how a transformation behaves, and
+            about what happens when many transformations are composed. Two examples make the connection concrete.
+          </p>
+
+          <section class="editorial-section" aria-labelledby="swizzling-title">
+            <div class="section-number" aria-hidden="true">01</div>
+            <div class="section-content">
+              <h2 id="swizzling-title">Cheap permutations in shared-memory swizzling</h2>
+
+              <p>
+                GPU shared memory is divided into banks that can serve accesses in parallel. When multiple
+                threads in a warp request different words from the same bank, those accesses conflict and may
+                be serialized.
+              </p>
+
+              <p>
+                High-performance kernels therefore often <em>swizzle</em> their shared-memory layouts: they
+                apply a small transformation to logical coordinates so that the target access pattern lands
+                on different banks.
+              </p>
+
+              <h3>Why does XOR appear so often?</h3>
+
+              <p>If the relevant address bits are vectors in \(\mathbb{F}_2^n\), XOR is simply addition:</p>
+
+              <div class="math-display">
+                \[
+                  x \oplus y = x + y
+                  \qquad \text{in } \mathbb{F}_2^n.
+                \]
+              </div>
+
+              <p>For any fixed \(r\), the map</p>
+
+              <div class="math-display">
+                \[
+                  c \mapsto r \oplus c
+                \]
+              </div>
+
+              <p>
+                is a permutation: if \(r \oplus c_1 = r \oplus c_2\), XORing both sides with \(r\) gives
+                \(c_1 = c_2\). The map is injective, and an injective map on a finite set is a bijection.
+              </p>
+
+              <p>So a toy bank map such as</p>
+
+              <div class="math-display">
+                \[
+                  \operatorname{bank}(r,c) = r \oplus c
+                \]
+              </div>
+
+              <p>
+                has a useful property: fixing either \(r\) or \(c\) gives a permutation of the bank indices.
+                Its table is therefore a <strong>Latin square</strong>—every bank index appears exactly once in
+                each row and each column.
+              </p>
+
+              <figure class="article-visual editorial-visual">
+                <img
+                  src="/assets/blog/math4mlsys/xor-swizzle.svg"
+                  alt="A naive bank map repeats bank zero down one column, while an XOR swizzle maps that column to four distinct bank indices."
+                  width="1200"
+                  height="620"
+                />
+                <figcaption>
+                  XOR does not remove data or duplicate it. It cheaply permutes where each logical coordinate lands.
+                </figcaption>
+              </figure>
+
+              <p>
+                For an access pattern that follows one of those rows or columns, lanes are spread across
+                distinct banks. CuTe’s <code>Swizzle&lt;B,M,S&gt;</code> makes the construction explicit by XORing
+                selected address-bit fields. TMA can also apply standard shared-memory swizzles in hardware
+                while moving a tile.
+              </p>
+            </div>
+          </section>
+
+          <section class="editorial-section" aria-labelledby="recurrent-title">
+            <div class="section-number" aria-hidden="true">02</div>
+            <div class="section-content">
+              <h2 id="recurrent-title">Chunked recurrent models: compose transformations, not states</h2>
+
+              <p>Now consider a recurrent sequence model:</p>
+
+              <div class="math-display">
+                \[
+                  S_t = f_t(S_{t-1}).
+                \]
+              </div>
+
+              <p>
+                It looks inherently sequential because computing \(S_t\) requires \(S_{t-1}\). But we can
+                instead look at the transformation applied to the initial state:
+              </p>
+
+              <div class="math-display">
+                \[
+                  S_t = (f_t \circ f_{t-1} \circ \cdots \circ f_1)(S_0).
+                \]
+              </div>
+
+              <p>Function composition is associative:</p>
+
+              <div class="math-display">
+                \[
+                  (f_3 \circ f_2) \circ f_1
+                  =
+                  f_3 \circ (f_2 \circ f_1).
+                \]
+              </div>
+
+              <p>
+                That gives a parallel system permission to group updates into chunks—provided that each
+                composed chunk still has an efficient representation.
+              </p>
+
+              <figure class="article-visual editorial-visual editorial-visual--wide">
+                <img
+                  src="/assets/blog/math4mlsys/associative-chunks.svg"
+                  alt="Seven token transformations grouped into two chunks and summarized as compact chunk transformations."
+                  width="1200"
+                  height="445"
+                />
+                <figcaption>
+                  Associativity changes the grouping of the work, which is what exposes chunk-level parallelism.
+                </figcaption>
+              </figure>
+
+              <aside class="key-idea">
+                <span class="key-idea-label">The important condition</span>
+                <p><strong>Associativity makes regrouping legal.</strong> It does not make the regrouped computation fast.</p>
+              </aside>
+
+              <p>DeltaNet is a good example. Its state update can be written schematically as</p>
+
+              <div class="math-display">
+                \[
+                  S_t
+                  =
+                  S_{t-1}(I - \beta_t k_t k_t^\top)
+                  + \beta_t v_t k_t^\top.
+                \]
+              </div>
+
+              <p>
+                Each token applies a rank-1 correction to the current state. Naively evaluating these updates
+                one by one loses the sequence-level parallelism that GPUs want.
+              </p>
+
+              <p>
+                The hardware-efficient DeltaNet algorithm exploits the structure of the transition matrices.
+                A product of many generalized Householder transformations—with unit-norm keys—
+              </p>
+
+              <div class="math-display">
+                \[
+                  \prod_{t=1}^{C}(I - \beta_t k_t k_t^\top)
+                \]
+              </div>
+
+              <p>
+                can be stored in a compact WY-style form rather than materialized as every intermediate state.
+                A chunk of token-wise updates can then be turned into a small number of matrix
+                multiplications—the form modern GPUs execute best.
+              </p>
+
+              <p>
+                Kimi Delta Attention carries the same idea further. Its transition has a constrained
+                diagonal-plus-low-rank form,
+              </p>
+
+              <div class="math-display">
+                \[
+                  A_t = D_t - a_t b_t^\top,
+                \]
+              </div>
+
+              <p>
+                so it can add fine-grained, per-coordinate decay while retaining a specialized chunkwise
+                algorithm. The lesson is not merely that composition is associative. <strong>The
+                transformations must also have a representation that stays compact when they compose.</strong>
+              </p>
+            </div>
+          </section>
+
+          <section class="closing-synthesis" aria-labelledby="synthesis-title">
+            <p class="page-kicker">The shared pattern</p>
+            <h2 id="synthesis-title">Structure is what turns algebra into speed</h2>
+            <p>
+              In the first example, algebra gives us a structured permutation. In the second, it gives us
+              permission to regroup structured state updates.
+            </p>
+            <p>
+              In both cases, the systems payoff comes from the same pattern: a cheap transformation, a
+              structural guarantee, and a hardware-friendly representation.
+            </p>
+          </section>
+
+          <section class="references" aria-labelledby="references-title">
+            <h2 id="references-title">References &amp; technical pointers</h2>
+            <ol>
+              <li>
+                <a href="https://docs.nvidia.com/cutlass/latest/media/docs/pythonDSL/cute_dsl_api/cute.html#cutlass.cute.Swizzle" target="_blank" rel="noreferrer">NVIDIA CUTLASS / CuTe DSL documentation on <code>Swizzle</code></a>
+                <span>The C++ template is <code>Swizzle&lt;B,M,S&gt;</code>.</span>
+              </li>
+              <li>
+                <a href="https://docs.nvidia.com/cuda/cuda-programming-guide/04-special-topics/async-copies.html#shared-memory-bank-swizzling" target="_blank" rel="noreferrer">NVIDIA CUDA Programming Guide: Shared-Memory Bank Swizzling</a>
+              </li>
+              <li>
+                Yang et al.,
+                <a href="https://arxiv.org/abs/2406.06484" target="_blank" rel="noreferrer"><em>Parallelizing Linear Transformers with the Delta Rule over Sequence Length</em></a>, NeurIPS 2024.
+              </li>
+              <li>
+                Kimi Team,
+                <a href="https://arxiv.org/abs/2510.26692" target="_blank" rel="noreferrer"><em>Kimi Linear: An Expressive, Efficient Attention Architecture</em></a>, 2025.
+              </li>
+            </ol>
+          </section>
+        </div>
+
+        <nav class="article-series-nav" aria-label="More in Math4MLSys">
+          <span>
+            <small>Series</small>
+            <strong>Math4MLSys</strong>
+          </span>
+          <a href="/blog/math4mlsys/">View all notes <span aria-hidden="true">→</span></a>
+        </nav>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <span>© <span id="year">2026</span> Jingwen Gu</span>
+      <span>Last updated September 2026</span>
+    </footer>
+  </div>
+
+  <script src="/assets/js/main.js" defer></script>
+</body>
+</html>
